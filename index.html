@@ -7,267 +7,78 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0a0a0c;
-  --bg2: #111114;
-  --bg3: #18181c;
-  --bg4: #1f1f24;
-  --border: #2a2a32;
-  --border2: #3a3a45;
-  --text: #f0f0f5;
-  --text2: #a0a0b0;
-  --text3: #6a6a7a;
-  --accent: #7c5cff;
-  --accent2: #a78bfa;
-  --accent3: #c4b5fd;
-  --green: #22c55e;
-  --red: #ef4444;
-  --orange: #f59e0b;
-  --cyan: #22d3ee;
-  --gradient: linear-gradient(135deg, #7c5cff 0%, #a78bfa 50%, #22d3ee 100%);
-  --glow: 0 0 40px rgba(124, 92, 255, 0.25);
-  --radius: 14px;
-  --radius-sm: 10px;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { height:100%; background:var(--bg); color:var(--text); font-family:'Inter',system-ui,sans-serif; overflow-x:hidden; }
-body::before {
-  content:''; position:fixed; inset:0; background:
-    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(124,92,255,0.15), transparent),
-    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(34,211,238,0.08), transparent),
-    radial-gradient(ellipse 50% 30% at 50% 100%, rgba(167,139,250,0.06), transparent);
-  pointer-events:none; z-index:0;
-}
-.noise { position:fixed; inset:0; opacity:0.03; pointer-events:none; z-index:1; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-
-/* NAV */
-nav {
-  position:fixed; top:0; left:0; right:0; height:64px; z-index:100;
-  display:flex; align-items:center; justify-content:space-between; padding:0 32px;
-  background:rgba(10,10,12,0.75); backdrop-filter:blur(20px); border-bottom:1px solid var(--border);
-}
-.logo { display:flex; align-items:center; gap:12px; font-weight:800; font-size:20px; letter-spacing:-0.5px; }
-.logo-icon {
-  width:36px; height:36px; border-radius:10px; background:var(--gradient);
-  display:flex; align-items:center; justify-content:center; font-size:18px; box-shadow:var(--glow);
-}
-.nav-links { display:flex; gap:8px; }
-.nav-btn {
-  padding:8px 16px; border-radius:8px; border:1px solid transparent; background:transparent;
-  color:var(--text2); font-size:13px; font-weight:500; cursor:pointer; transition:all .2s;
-}
-.nav-btn:hover, .nav-btn.active { background:var(--bg3); color:var(--text); border-color:var(--border); }
-.nav-status {
-  display:flex; align-items:center; gap:8px; padding:6px 14px; border-radius:20px;
-  background:var(--bg3); border:1px solid var(--border); font-size:12px; color:var(--text2);
-}
-.status-dot { width:8px; height:8px; border-radius:50%; background:var(--red); transition:all .3s; }
-.status-dot.online { background:var(--green); box-shadow:0 0 10px var(--green); }
-
-/* LAYOUT */
-.main { position:relative; z-index:2; padding-top:64px; min-height:100vh; display:flex; }
-.sidebar {
-  width:260px; flex-shrink:0; border-right:1px solid var(--border);
-  background:rgba(17,17,20,0.6); padding:24px 16px; display:flex; flex-direction:column; gap:4px;
-  height:calc(100vh - 64px); position:sticky; top:64px;
-}
-.side-item {
-  display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px;
-  color:var(--text2); font-size:13.5px; font-weight:500; cursor:pointer; transition:all .2s; border:1px solid transparent;
-}
-.side-item:hover { background:var(--bg3); color:var(--text); }
-.side-item.active { background:rgba(124,92,255,0.12); color:var(--accent2); border-color:rgba(124,92,255,0.25); }
-.side-item svg { width:18px; height:18px; opacity:0.8; }
-.side-section { margin-top:20px; padding:0 14px 8px; font-size:11px; font-weight:600; color:var(--text3); letter-spacing:0.8px; text-transform:uppercase; }
-
-.content { flex:1; padding:32px 40px; max-width:1100px; }
-.page { display:none; animation:fadeIn .35s ease; }
-.page.active { display:block; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
-
-h1 { font-size:28px; font-weight:700; letter-spacing:-0.6px; margin-bottom:6px; }
-.subtitle { color:var(--text2); font-size:14px; margin-bottom:32px; }
-
-/* CARDS */
-.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-bottom:32px; }
-.card {
-  background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius);
-  padding:20px; transition:all .25s; position:relative; overflow:hidden;
-}
-.card:hover { border-color:var(--border2); transform:translateY(-2px); box-shadow:0 12px 40px rgba(0,0,0,0.3); }
-.card::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:1px;
-  background:linear-gradient(90deg, transparent, rgba(124,92,255,0.4), transparent);
-}
-.card-title { font-size:14px; font-weight:600; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
-.card-desc { font-size:12.5px; color:var(--text2); line-height:1.5; }
-.card-icon {
-  width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center;
-  background:rgba(124,92,255,0.12); color:var(--accent2); margin-bottom:14px;
-}
-
-/* FORMS */
-.form-group { margin-bottom:20px; }
-label { display:block; font-size:12px; font-weight:600; color:var(--text2); margin-bottom:8px; letter-spacing:0.3px; }
-input, select, textarea {
-  width:100%; padding:12px 14px; background:var(--bg3); border:1px solid var(--border);
-  border-radius:var(--radius-sm); color:var(--text); font-size:13.5px; font-family:inherit;
-  transition:all .2s; outline:none;
-}
-input:focus, select:focus, textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,92,255,0.15); }
-input::placeholder, textarea::placeholder { color:var(--text3); }
-.input-row { display:flex; gap:12px; }
-.input-row > * { flex:1; }
-
-.btn {
-  display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  padding:12px 20px; border-radius:var(--radius-sm); font-size:13.5px; font-weight:600;
-  cursor:pointer; border:none; transition:all .2s; font-family:inherit;
-}
-.btn-primary {
-  background:var(--gradient); color:#fff; box-shadow:0 4px 20px rgba(124,92,255,0.35);
-}
-.btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 28px rgba(124,92,255,0.45); }
-.btn-primary:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
-.btn-ghost {
-  background:var(--bg3); color:var(--text); border:1px solid var(--border);
-}
-.btn-ghost:hover { background:var(--bg4); border-color:var(--border2); }
-.btn-danger { background:rgba(239,68,68,0.15); color:var(--red); border:1px solid rgba(239,68,68,0.3); }
-.btn-success { background:rgba(34,197,94,0.15); color:var(--green); border:1px solid rgba(34,197,94,0.3); }
-.btn-sm { padding:8px 14px; font-size:12.5px; }
-
-/* KEY VALIDATION */
-.key-box {
-  background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius);
-  padding:28px; max-width:520px;
-}
-.key-status {
-  display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:10px;
-  margin-top:16px; font-size:13px; font-weight:500;
-}
-.key-status.valid { background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.25); color:var(--green); }
-.key-status.invalid { background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); color:var(--red); }
-.key-status.pending { background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); color:var(--orange); }
-
-/* MODELS */
-.model-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; }
-.model-card {
-  background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:16px;
-  cursor:pointer; transition:all .2s; position:relative;
-}
-.model-card:hover { border-color:var(--accent); }
-.model-card.selected { border-color:var(--accent); background:rgba(124,92,255,0.08); }
-.model-card.selected::after {
-  content:'✓'; position:absolute; top:10px; right:12px; width:20px; height:20px;
-  background:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center;
-  font-size:11px; color:#fff; font-weight:700;
-}
-.model-name { font-size:13.5px; font-weight:600; margin-bottom:4px; }
-.model-meta { font-size:11.5px; color:var(--text3); }
-.model-badge {
-  display:inline-block; margin-top:8px; padding:3px 8px; border-radius:6px;
-  font-size:10px; font-weight:600; background:rgba(124,92,255,0.15); color:var(--accent2);
-}
-
-/* FILES */
-.drop-zone {
-  border:2px dashed var(--border); border-radius:var(--radius); padding:40px 20px;
-  text-align:center; transition:all .25s; cursor:pointer; background:var(--bg2);
-}
-.drop-zone:hover, .drop-zone.dragover { border-color:var(--accent); background:rgba(124,92,255,0.05); }
-.drop-zone svg { width:40px; height:40px; color:var(--text3); margin-bottom:12px; }
-.file-list { margin-top:16px; display:flex; flex-direction:column; gap:8px; }
-.file-item {
-  display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--bg3);
-  border:1px solid var(--border); border-radius:10px; font-size:13px;
-}
-.file-item img { width:40px; height:40px; border-radius:6px; object-fit:cover; }
-.file-info { flex:1; min-width:0; }
-.file-name { font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.file-size { font-size:11px; color:var(--text3); }
-.file-remove { background:none; border:none; color:var(--text3); cursor:pointer; padding:4px; border-radius:4px; }
-.file-remove:hover { color:var(--red); background:rgba(239,68,68,0.1); }
-
-/* MCP + CONNECT */
-.connect-panel {
-  background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius);
-  padding:28px; margin-bottom:24px;
-}
-.step-list { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
-.step {
-  display:flex; align-items:center; gap:14px; padding:14px 16px; background:var(--bg3);
-  border-radius:10px; border:1px solid var(--border); font-size:13.5px;
-}
-.step-num {
-  width:28px; height:28px; border-radius:8px; background:var(--bg4); display:flex;
-  align-items:center; justify-content:center; font-weight:700; font-size:12px; color:var(--text2);
-}
-.step.done .step-num { background:rgba(34,197,94,0.2); color:var(--green); }
-.step.active .step-num { background:rgba(124,92,255,0.2); color:var(--accent2); }
-
-/* DOWNLOAD BUBBLE */
-.download-hero {
-  background:linear-gradient(145deg, #15151a 0%, #1a1a22 100%);
-  border:1px solid var(--border); border-radius:20px; padding:40px; text-align:center;
-  position:relative; overflow:hidden; margin-top:24px;
-}
-.download-hero::before {
-  content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
-  background:radial-gradient(circle at 30% 40%, rgba(124,92,255,0.12), transparent 50%);
-  pointer-events:none;
-}
-.bubble-preview {
-  width:80px; height:80px; border-radius:50%; margin:0 auto 24px;
-  background:var(--gradient); display:flex; align-items:center; justify-content:center;
-  font-size:32px; box-shadow:0 0 60px rgba(124,92,255,0.4); animation:pulse 3s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%,100% { transform:scale(1); box-shadow:0 0 60px rgba(124,92,255,0.4); }
-  50% { transform:scale(1.05); box-shadow:0 0 80px rgba(124,92,255,0.55); }
-}
-.download-hero h2 { font-size:22px; margin-bottom:8px; }
-.download-hero p { color:var(--text2); font-size:14px; max-width:420px; margin:0 auto 24px; line-height:1.6; }
-
-/* TOAST */
-.toast-container { position:fixed; bottom:24px; right:24px; z-index:999; display:flex; flex-direction:column; gap:8px; }
-.toast {
-  padding:14px 18px; background:var(--bg3); border:1px solid var(--border); border-radius:12px;
-  font-size:13px; font-weight:500; box-shadow:0 10px 40px rgba(0,0,0,0.4); animation:slideIn .3s ease;
-  display:flex; align-items:center; gap:10px; min-width:280px;
-}
-@keyframes slideIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none} }
-.toast.success { border-color:rgba(34,197,94,0.4); }
-.toast.error { border-color:rgba(239,68,68,0.4); }
-
-/* FOOTER BRAND */
-.brand-footer {
-  margin-top:auto; padding:20px 14px 8px; font-size:11px; color:var(--text3); text-align:center;
-}
-.brand-footer a { color:var(--accent2); text-decoration:none; }
-.brand-footer a:hover { text-decoration:underline; }
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width:6px; height:6px; }
-::-webkit-scrollbar-track { background:transparent; }
-::-webkit-scrollbar-thumb { background:var(--border2); border-radius:3px; }
-::-webkit-scrollbar-thumb:hover { background:#4a4a55; }
-
-@media (max-width:900px) {
-  .sidebar { display:none; }
-  .content { padding:24px 20px; }
-  nav { padding:0 16px; }
-}
+:root{--bg:#0a0a0c;--bg2:#111114;--bg3:#18181c;--bg4:#1f1f24;--border:#2a2a32;--border2:#3a3a45;--text:#f0f0f5;--text2:#a0a0b0;--text3:#6a6a7a;--accent:#7c5cff;--accent2:#a78bfa;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--cyan:#22d3ee;--gradient:linear-gradient(135deg,#7c5cff 0%,#a78bfa 50%,#22d3ee 100%);--glow:0 0 40px rgba(124,92,255,.25);--radius:14px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}html,body{height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% -10%,rgba(124,92,255,.15),transparent),radial-gradient(ellipse 60% 40% at 90% 10%,rgba(34,211,238,.08),transparent);pointer-events:none;z-index:0}
+.noise{position:fixed;inset:0;opacity:.03;pointer-events:none;z-index:1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(10,10,12,.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:var(--glow)}
+.nav-links{display:flex;gap:8px}.nav-btn{padding:8px 16px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.nav-btn:hover,.nav-btn.active{background:var(--bg3);color:var(--text);border-color:var(--border)}
+.nav-status{display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;background:var(--bg3);border:1px solid var(--border);font-size:12px;color:var(--text2)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--red);transition:all .3s}.status-dot.online{background:var(--green);box-shadow:0 0 10px var(--green)}
+.main{position:relative;z-index:2;padding-top:64px;min-height:100vh;display:flex}
+.sidebar{width:260px;flex-shrink:0;border-right:1px solid var(--border);background:rgba(17,17,20,.6);padding:24px 16px;display:flex;flex-direction:column;gap:4px;height:calc(100vh - 64px);position:sticky;top:64px}
+.side-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;color:var(--text2);font-size:13.5px;font-weight:500;cursor:pointer;transition:all .2s;border:1px solid transparent}
+.side-item:hover{background:var(--bg3);color:var(--text)}.side-item.active{background:rgba(124,92,255,.12);color:var(--accent2);border-color:rgba(124,92,255,.25)}
+.side-item svg{width:18px;height:18px;opacity:.8}.side-section{margin-top:20px;padding:0 14px 8px;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.8px;text-transform:uppercase}
+.content{flex:1;padding:32px 40px;max-width:1100px}.page{display:none;animation:fadeIn .35s ease}.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1{font-size:28px;font-weight:700;letter-spacing:-.6px;margin-bottom:6px}.subtitle{color:var(--text2);font-size:14px;margin-bottom:32px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all .25s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(124,92,255,.4),transparent)}
+.card-title{font-size:14px;font-weight:600;margin-bottom:6px}.card-desc{font-size:12.5px;color:var(--text2);line-height:1.5}
+.card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(124,92,255,.12);color:var(--accent2);margin-bottom:14px;font-size:18px}
+.form-group{margin-bottom:20px}label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px}
+input,select,textarea{width:100%;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13.5px;font-family:inherit;transition:all .2s;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(124,92,255,.15)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;cursor:pointer;border:none;transition:all .2s;font-family:inherit}
+.btn-primary{background:var(--gradient);color:#fff;box-shadow:0 4px 20px rgba(124,92,255,.35)}.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(124,92,255,.45)}.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-ghost{background:var(--bg3);color:var(--text);border:1px solid var(--border)}.btn-ghost:hover{background:var(--bg4);border-color:var(--border2)}
+.key-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:520px}
+.key-status{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;margin-top:16px;font-size:13px;font-weight:500}
+.key-status.valid{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:var(--green)}
+.key-status.invalid{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:var(--red)}
+.key-status.pending{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:var(--orange)}
+.model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.model-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:all .2s;position:relative}
+.model-card:hover{border-color:var(--accent)}.model-card.selected{border-color:var(--accent);background:rgba(124,92,255,.08)}
+.model-card.selected::after{content:'✓';position:absolute;top:10px;right:12px;width:20px;height:20px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700}
+.model-name{font-size:13.5px;font-weight:600;margin-bottom:4px}.model-meta{font-size:11.5px;color:var(--text3)}
+.model-badge{display:inline-block;margin-top:8px;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;background:rgba(124,92,255,.15);color:var(--accent2)}
+.drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;text-align:center;transition:all .25s;cursor:pointer;background:var(--bg2)}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(124,92,255,.05)}
+.file-list{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.file-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;font-size:13px}
+.file-item img{width:40px;height:40px;border-radius:6px;object-fit:cover}.file-info{flex:1;min-width:0}
+.file-name{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.file-size{font-size:11px;color:var(--text3)}
+.file-remove{background:none;border:none;color:var(--text3);cursor:pointer;padding:4px;border-radius:4px}.file-remove:hover{color:var(--red);background:rgba(239,68,68,.1)}
+.connect-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:24px}
+.step-list{display:flex;flex-direction:column;gap:12px;margin:20px 0}
+.step{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg3);border-radius:10px;border:1px solid var(--border);font-size:13.5px}
+.step-num{width:28px;height:28px;border-radius:8px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--text2)}
+.step.done .step-num{background:rgba(34,197,94,.2);color:var(--green)}
+.download-hero{background:linear-gradient(145deg,#15151a 0%,#1a1a22 100%);border:1px solid var(--border);border-radius:20px;padding:40px;text-align:center;position:relative;overflow:hidden;margin-top:24px}
+.download-hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(124,92,255,.12),transparent 50%);pointer-events:none}
+.bubble-preview{width:80px;height:80px;border-radius:50%;margin:0 auto 24px;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 0 60px rgba(124,92,255,.4);animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{padding:14px 18px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;font-size:13px;font-weight:500;box-shadow:0 10px 40px rgba(0,0,0,.4);animation:slideIn .3s ease;display:flex;align-items:center;gap:10px;min-width:280px}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.toast.success{border-color:rgba(34,197,94,.4)}.toast.error{border-color:rgba(239,68,68,.4)}
+.brand-footer{margin-top:auto;padding:20px 14px 8px;font-size:11px;color:var(--text3);text-align:center}
+.brand-footer a{color:var(--accent2);text-decoration:none}
+code.block{display:block;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;font-family:JetBrains Mono,monospace;font-size:12px;color:var(--cyan);white-space:pre-wrap;margin:12px 0;overflow-x:auto}
+@media(max-width:900px){.sidebar{display:none}.content{padding:24px 20px}nav{padding:0 16px}}
 </style>
 </head>
 <body>
 <div class="noise"></div>
-
 <nav>
-  <div class="logo">
-    <div class="logo-icon">✦</div>
-    <span>AlzGUI</span>
-  </div>
+  <div class="logo"><div class="logo-icon">✦</div><span>AlzGUI</span></div>
   <div class="nav-links">
     <button class="nav-btn active" data-page="dashboard">Dashboard</button>
     <button class="nav-btn" data-page="keys">API Keys</button>
@@ -275,99 +86,54 @@ input::placeholder, textarea::placeholder { color:var(--text3); }
     <button class="nav-btn" data-page="files">Files</button>
     <button class="nav-btn" data-page="connect">Connect</button>
   </div>
-  <div class="nav-status">
-    <div class="status-dot" id="statusDot"></div>
-    <span id="statusText">Disconnected</span>
-  </div>
+  <div class="nav-status"><div class="status-dot" id="statusDot"></div><span id="statusText">Disconnected</span></div>
 </nav>
-
 <div class="main">
   <aside class="sidebar">
-    <div class="side-item active" data-page="dashboard">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-      Dashboard
-    </div>
-    <div class="side-item" data-page="keys">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
-      API Keys
-    </div>
-    <div class="side-item" data-page="models">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-      AI Models
-    </div>
-    <div class="side-item" data-page="files">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-      Files & Photos
-    </div>
+    <div class="side-item active" data-page="dashboard"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Dashboard</div>
+    <div class="side-item" data-page="keys"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>API Keys</div>
+    <div class="side-item" data-page="models"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>AI Models</div>
+    <div class="side-item" data-page="files"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>Files & Photos</div>
     <div class="side-section">Roblox</div>
-    <div class="side-item" data-page="connect">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-      MCP Connect
-    </div>
-    <div class="side-item" data-page="download">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-      Chat Bubble
-    </div>
-    <div class="brand-footer">
-      ALZ • BY ALZ♥︎<br>
-      <a href="https://discord.gg/RzwyR6nRZb" target="_blank">discord.gg/RzwyR6nRZb</a><br>
-      creator alz☆
-    </div>
+    <div class="side-item" data-page="connect"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>MCP Connect</div>
+    <div class="side-item" data-page="download"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>Chat Bubble</div>
+    <div class="brand-footer">ALZ • BY ALZ♥︎<br><a href="https://discord.gg/RzwyR6nRZb" target="_blank">discord.gg/RzwyR6nRZb</a><br>creator alz☆</div>
   </aside>
-
   <div class="content">
-    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <h1>Dashboard</h1>
-      <p class="subtitle">Roblox connector control center — validate keys, connect MCP, deploy the pure chat bubble.</p>
+      <p class="subtitle">Real API calls · real models · Roblox Studio MCP ready.</p>
       <div class="grid">
-        <div class="card">
-          <div class="card-icon">🔑</div>
-          <div class="card-title">API Validation</div>
-          <div class="card-desc">Secure key check before any MCP handshake. Supports OpenAI, Anthropic, Google, xAI, Groq, DeepSeek and custom endpoints.</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">🔗</div>
-          <div class="card-title">MCP Bridge</div>
-          <div class="card-desc">Model Context Protocol connector for Roblox. Full tool access, file upload, photo injection, live model routing.</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">💬</div>
-          <div class="card-title">Pure Bubble</div>
-          <div class="card-desc">Downloadable chat bubble with zero window chrome — no minimize, no resize, no kill. Floating pure AI interface.</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">🧠</div>
-          <div class="card-title">Best Models</div>
-          <div class="card-desc">Claude 4, GPT-4.1, Gemini 2.5, Grok-3, DeepSeek-R1, Qwen3, Llama-4 and every frontier model with full access.</div>
-        </div>
+        <div class="card"><div class="card-icon">🔑</div><div class="card-title">Live Key Validation</div><div class="card-desc">Actually hits /models endpoint of the provider. Keys stay in localStorage only.</div></div>
+        <div class="card"><div class="card-icon">🧠</div><div class="card-title">Real Model Calls</div><div class="card-desc">Bubble routes every message through the exact provider + key you validated. Claude, GPT, Grok, DeepSeek, Gemini all live.</div></div>
+        <div class="card"><div class="card-icon">🔗</div><div class="card-title">Roblox Studio MCP</div><div class="card-desc">Exact config for Cursor / Claude Desktop / VS Code using the official Roblox Studio mcp.bat.</div></div>
+        <div class="card"><div class="card-icon">💬</div><div class="card-title">Pure Bubble</div><div class="card-desc">Zero chrome. Drag only. No minimize, no resize, no kill. Full model access + file context.</div></div>
       </div>
       <div class="connect-panel">
-        <h3 style="font-size:16px;margin-bottom:8px;">Quick Status</h3>
-        <div class="step-list" id="quickStatus">
-          <div class="step" id="step-key"><div class="step-num">1</div><span>API Key validated</span></div>
-          <div class="step" id="step-mcp"><div class="step-num">2</div><span>MCP connected</span></div>
+        <h3 style="font-size:16px;margin-bottom:8px">Quick Status</h3>
+        <div class="step-list">
+          <div class="step" id="step-key"><div class="step-num">1</div><span>API Key validated (live)</span></div>
+          <div class="step" id="step-mcp"><div class="step-num">2</div><span>MCP / Studio ready</span></div>
           <div class="step" id="step-bubble"><div class="step-num">3</div><span>Chat Bubble ready</span></div>
         </div>
       </div>
     </div>
 
-    <!-- API KEYS -->
     <div class="page" id="page-keys">
       <h1>API Keys</h1>
-      <p class="subtitle">Add and validate provider keys. Keys stay local — never leave your browser.</p>
+      <p class="subtitle">Live validation against real provider endpoints. Keys never leave your browser.</p>
       <div class="key-box">
         <div class="form-group">
           <label>Provider</label>
           <select id="keyProvider">
             <option value="openai">OpenAI</option>
             <option value="anthropic">Anthropic</option>
-            <option value="google">Google AI</option>
+            <option value="google">Google AI (Gemini)</option>
             <option value="xai">xAI (Grok)</option>
             <option value="groq">Groq</option>
             <option value="deepseek">DeepSeek</option>
             <option value="openrouter">OpenRouter</option>
-            <option value="custom">Custom Endpoint</option>
+            <option value="custom">Custom OpenAI-compatible</option>
           </select>
         </div>
         <div class="form-group" id="customEndpointGroup" style="display:none">
@@ -376,122 +142,115 @@ input::placeholder, textarea::placeholder { color:var(--text3); }
         </div>
         <div class="form-group">
           <label>API Key</label>
-          <input type="password" id="apiKeyInput" placeholder="sk-... or equivalent">
+          <input type="password" id="apiKeyInput" placeholder="sk-... / xai-... / etc">
         </div>
-        <button class="btn btn-primary" id="validateBtn" onclick="validateKey()">
-          <span>Validate & Save</span>
-        </button>
+        <button class="btn btn-primary" id="validateBtn" onclick="validateKey()">Validate Live & Save</button>
         <div id="keyStatus"></div>
       </div>
-      <div style="margin-top:28px">
-        <h3 style="font-size:14px;margin-bottom:12px;color:var(--text2)">Saved Keys</h3>
-        <div id="savedKeys" class="file-list"></div>
-      </div>
+      <div style="margin-top:28px"><h3 style="font-size:14px;margin-bottom:12px;color:var(--text2)">Saved Keys</h3><div id="savedKeys" class="file-list"></div></div>
     </div>
 
-    <!-- MODELS -->
     <div class="page" id="page-models">
       <h1>AI Models</h1>
-      <p class="subtitle">Select the models available inside the Chat Bubble. Full access enabled.</p>
+      <p class="subtitle">Only models that match a validated key will work in the bubble.</p>
       <div class="model-grid" id="modelGrid"></div>
-      <div style="margin-top:24px">
-        <button class="btn btn-primary" onclick="saveModels()">Save Model Selection</button>
-      </div>
+      <div style="margin-top:24px"><button class="btn btn-primary" onclick="saveModels()">Save Model Selection</button></div>
     </div>
 
-    <!-- FILES -->
     <div class="page" id="page-files">
       <h1>Files & Photos</h1>
-      <p class="subtitle">Upload images, scripts, assets. Injected into MCP context and available to the bubble.</p>
+      <p class="subtitle">Attached to every bubble message as context.</p>
       <div class="drop-zone" id="dropZone">
-        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-        <div style="font-weight:600;margin-bottom:4px">Drop files or click to upload</div>
-        <div style="font-size:12px;color:var(--text3)">PNG, JPG, WEBP, LUA, TXT, JSON — max 25MB each</div>
-        <input type="file" id="fileInput" multiple accept="image/*,.lua,.txt,.json,.rbxm,.rbxl" style="display:none">
+        <div style="font-size:32px;margin-bottom:8px">📎</div>
+        <div style="font-weight:600;margin-bottom:4px">Drop files or click</div>
+        <div style="font-size:12px;color:var(--text3)">Images + text / lua / json</div>
+        <input type="file" id="fileInput" multiple accept="image/*,.lua,.txt,.json,.md" style="display:none">
       </div>
       <div class="file-list" id="fileList"></div>
     </div>
 
-    <!-- CONNECT -->
     <div class="page" id="page-connect">
       <h1>MCP Connect</h1>
-      <p class="subtitle">Validate → Connect → Deploy. Roblox MCP bridge with full tool surface.</p>
+      <p class="subtitle">Roblox Studio official local MCP + AlzGUI bridge.</p>
       <div class="connect-panel">
+        <h3 style="font-size:15px;margin-bottom:10px">1. Roblox Studio MCP (exact config)</h3>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Paste this into Cursor / Claude Desktop / VS Code MCP settings:</p>
+        <code class="block" id="mcpConfig">{
+  "mcpServers": {
+    "Roblox_Studio": {
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "cd /d %LOCALAPPDATA%\\Roblox && .\\mcp.bat"
+      ]
+    }
+  }
+}</code>
+        <button class="btn btn-ghost btn-sm" onclick="copyMcp()">Copy Config</button>
+        <div style="height:20px"></div>
+        <h3 style="font-size:15px;margin-bottom:10px">2. AlzGUI Session</h3>
         <div class="form-group">
           <label>Roblox Place / Universe ID (optional)</label>
           <input type="text" id="placeId" placeholder="123456789">
         </div>
-        <div class="form-group">
-          <label>MCP Server Endpoint</label>
-          <input type="text" id="mcpEndpoint" value="wss://mcp.alzgui.dev/v1" placeholder="wss://...">
-        </div>
         <div class="step-list">
-          <div class="step" id="cstep1"><div class="step-num">1</div><span>Key validated</span></div>
+          <div class="step" id="cstep1"><div class="step-num">1</div><span>Key validated (live)</span></div>
           <div class="step" id="cstep2"><div class="step-num">2</div><span>Models selected</span></div>
           <div class="step" id="cstep3"><div class="step-num">3</div><span>Files attached</span></div>
-          <div class="step" id="cstep4"><div class="step-num">4</div><span>MCP handshake</span></div>
+          <div class="step" id="cstep4"><div class="step-num">4</div><span>Session ready for Bubble</span></div>
         </div>
-        <button class="btn btn-primary" id="connectBtn" onclick="connectMCP()" style="width:100%;margin-top:8px">
-          Connect with MCP
-        </button>
-        <div id="connectLog" style="margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text3);line-height:1.7"></div>
+        <button class="btn btn-primary" id="connectBtn" onclick="connectMCP()" style="width:100%">Mark Session Ready</button>
+        <div id="connectLog" style="margin-top:16px;font-family:JetBrains Mono,monospace;font-size:12px;color:var(--text3);line-height:1.7"></div>
       </div>
     </div>
 
-    <!-- DOWNLOAD -->
     <div class="page" id="page-download">
       <h1>Chat Bubble</h1>
-      <p class="subtitle">Pure floating AI interface. No minimize. No resize. No kill button. Just the bubble.</p>
+      <p class="subtitle">Real API calls using your validated keys. Zero window controls.</p>
       <div class="download-hero">
         <div class="bubble-preview">✦</div>
         <h2>AlzGUI Chat Bubble</h2>
-        <p>Zero-chrome floating assistant with every selected model, file context, and MCP tools. Drop it anywhere — Roblox Studio, browser, desktop overlay.</p>
-        <button class="btn btn-primary" id="downloadBtn" onclick="downloadBubble()" disabled style="padding:14px 28px;font-size:15px">
-          Download Bubble
-        </button>
-        <div style="margin-top:16px;font-size:12px;color:var(--text3)">Requires successful MCP connection first</div>
-      </div>
-      <div style="margin-top:32px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
-        <h3 style="font-size:14px;margin-bottom:12px">Bubble Specs</h3>
-        <ul style="font-size:13px;color:var(--text2);line-height:1.8;padding-left:18px">
-          <li>No title bar, no minimize, no maximize, no close / kill</li>
-          <li>Drag anywhere by the bubble body</li>
-          <li>All selected frontier models with full tool access</li>
-          <li>Injected photos & files in context</li>
-          <li>MCP tools: Roblox instance read/write, script inject, asset upload</li>
-          <li>Local storage only — keys never transmitted to AlzGUI servers</li>
-        </ul>
+        <p>Every message is sent to the real model endpoint of the provider you validated. Drag only. No minimize / resize / kill.</p>
+        <button class="btn btn-primary" id="downloadBtn" onclick="downloadBubble()" disabled style="padding:14px 28px;font-size:15px">Download Bubble</button>
+        <div style="margin-top:16px;font-size:12px;color:var(--text3)">Requires validated key + session ready</div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="toast-container" id="toasts"></div>
 
 <script>
+const PROVIDERS = {
+  openai: { base: 'https://api.openai.com/v1', modelsPath: '/models', chatPath: '/chat/completions', auth: 'Bearer' },
+  anthropic: { base: 'https://api.anthropic.com', modelsPath: '/v1/models', chatPath: '/v1/messages', auth: 'x-api-key', extraHeaders: { 'anthropic-version': '2023-06-01' } },
+  google: { base: 'https://generativelanguage.googleapis.com/v1beta', modelsPath: '/models', chatPath: null, auth: 'query' },
+  xai: { base: 'https://api.x.ai/v1', modelsPath: '/models', chatPath: '/chat/completions', auth: 'Bearer' },
+  groq: { base: 'https://api.groq.com/openai/v1', modelsPath: '/models', chatPath: '/chat/completions', auth: 'Bearer' },
+  deepseek: { base: 'https://api.deepseek.com', modelsPath: '/models', chatPath: '/chat/completions', auth: 'Bearer' },
+  openrouter: { base: 'https://openrouter.ai/api/v1', modelsPath: '/models', chatPath: '/chat/completions', auth: 'Bearer' },
+  custom: { base: '', modelsPath: '/models', chatPath: '/chat/completions', auth: 'Bearer' }
+};
+
 const MODELS = [
-  { id:'claude-4-opus', name:'Claude 4 Opus', provider:'Anthropic', badge:'Best Coding' },
-  { id:'claude-4-sonnet', name:'Claude 4 Sonnet', provider:'Anthropic', badge:'Fast' },
-  { id:'gpt-4.1', name:'GPT-4.1', provider:'OpenAI', badge:'Frontier' },
-  { id:'gpt-4.1-mini', name:'GPT-4.1 Mini', provider:'OpenAI', badge:'Efficient' },
-  { id:'o3', name:'o3', provider:'OpenAI', badge:'Reasoning' },
-  { id:'gemini-2.5-pro', name:'Gemini 2.5 Pro', provider:'Google', badge:'Long Context' },
-  { id:'gemini-2.5-flash', name:'Gemini 2.5 Flash', provider:'Google', badge:'Speed' },
-  { id:'grok-3', name:'Grok-3', provider:'xAI', badge:'Uncensored' },
-  { id:'grok-3-mini', name:'Grok-3 Mini', provider:'xAI', badge:'Fast' },
-  { id:'deepseek-r1', name:'DeepSeek-R1', provider:'DeepSeek', badge:'Reasoning' },
-  { id:'deepseek-v3', name:'DeepSeek-V3', provider:'DeepSeek', badge:'Strong' },
-  { id:'qwen3-235b', name:'Qwen3-235B', provider:'Alibaba', badge:'Open' },
-  { id:'llama-4-maverick', name:'Llama-4 Maverick', provider:'Meta', badge:'Open Weights' },
-  { id:'llama-4-scout', name:'Llama-4 Scout', provider:'Meta', badge:'Fast Open' },
-  { id:'command-r-plus', name:'Command R+', provider:'Cohere', badge:'Tools' },
+  { id: 'claude-sonnet-4-20250514', name: 'Claude Sonnet 4', provider: 'anthropic', badge: 'Best Coding' },
+  { id: 'claude-opus-4-20250514', name: 'Claude Opus 4', provider: 'anthropic', badge: 'Strongest' },
+  { id: 'gpt-4.1', name: 'GPT-4.1', provider: 'openai', badge: 'Frontier' },
+  { id: 'gpt-4.1-mini', name: 'GPT-4.1 Mini', provider: 'openai', badge: 'Fast' },
+  { id: 'o3', name: 'o3', provider: 'openai', badge: 'Reasoning' },
+  { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', provider: 'google', badge: 'Long Context' },
+  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', provider: 'google', badge: 'Speed' },
+  { id: 'grok-3', name: 'Grok-3', provider: 'xai', badge: 'Uncensored' },
+  { id: 'grok-3-mini', name: 'Grok-3 Mini', provider: 'xai', badge: 'Fast' },
+  { id: 'deepseek-reasoner', name: 'DeepSeek-R1', provider: 'deepseek', badge: 'Reasoning' },
+  { id: 'deepseek-chat', name: 'DeepSeek-V3', provider: 'deepseek', badge: 'Strong' },
+  { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B', provider: 'groq', badge: 'Groq Fast' },
+  { id: 'openrouter/auto', name: 'OpenRouter Auto', provider: 'openrouter', badge: 'Router' }
 ];
 
 let state = {
   keys: JSON.parse(localStorage.getItem('alz_keys') || '{}'),
-  selectedModels: JSON.parse(localStorage.getItem('alz_models') || '["claude-4-opus","gpt-4.1","grok-3","deepseek-r1"]'),
+  selectedModels: JSON.parse(localStorage.getItem('alz_models') || '["claude-sonnet-4-20250514","gpt-4.1","grok-3","deepseek-reasoner"]'),
   files: [],
-  validated: false,
   mcpConnected: false,
   bubbleReady: false
 };
@@ -502,7 +261,7 @@ function toast(msg, type='success'){
   t.className = 'toast ' + type;
   t.innerHTML = `<span>${type==='success'?'✓':'✕'}</span> ${msg}`;
   $('toasts').appendChild(t);
-  setTimeout(()=>t.remove(), 3200);
+  setTimeout(()=>t.remove(), 3500);
 }
 
 function switchPage(page){
@@ -511,200 +270,164 @@ function switchPage(page){
   $('page-'+page).classList.add('active');
   document.querySelectorAll(`[data-page="${page}"]`).forEach(el=>el.classList.add('active'));
 }
-
-document.querySelectorAll('[data-page]').forEach(el=>{
-  el.addEventListener('click', ()=>switchPage(el.dataset.page));
-});
+document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>switchPage(el.dataset.page)));
 
 $('keyProvider').addEventListener('change', e=>{
   $('customEndpointGroup').style.display = e.target.value==='custom' ? 'block' : 'none';
 });
 
-function validateKey(){
+async function validateKey(){
   const provider = $('keyProvider').value;
-  const key = $('apiKeyInput').value.trim();
+  let key = $('apiKeyInput').value.trim();
   const endpoint = $('customEndpoint').value.trim();
   if(!key){ toast('Enter an API key','error'); return; }
   const status = $('keyStatus');
-  status.innerHTML = `<div class="key-status pending">Validating ${provider}...</div>`;
+  status.innerHTML = `<div class="key-status pending">Hitting live endpoint for ${provider}...</div>`;
   $('validateBtn').disabled = true;
 
-  setTimeout(()=>{
-    const valid = key.length > 12;
-    if(valid){
-      state.keys[provider] = { key, endpoint: endpoint||null, ts: Date.now() };
+  const conf = { ...PROVIDERS[provider] };
+  if(provider === 'custom') conf.base = endpoint.replace(/\/$/,'');
+  if(!conf.base){ status.innerHTML = `<div class="key-status invalid">Missing base URL</div>`; $('validateBtn').disabled=false; return; }
+
+  try {
+    let url, headers = { 'Content-Type': 'application/json' };
+    if(conf.auth === 'Bearer') headers['Authorization'] = `Bearer ${key}`;
+    else if(conf.auth === 'x-api-key') headers['x-api-key'] = key;
+    if(conf.extraHeaders) Object.assign(headers, conf.extraHeaders);
+
+    if(provider === 'google'){
+      url = `${conf.base}/models?key=${encodeURIComponent(key)}`;
+    } else {
+      url = conf.base + conf.modelsPath;
+    }
+
+    const res = await fetch(url, { method: 'GET', headers });
+    if(!res.ok){
+      const errText = await res.text().catch(()=>'');
+      throw new Error(`${res.status} ${res.statusText} ${errText.slice(0,120)}`);
+    }
+    state.keys[provider] = { key, endpoint: conf.base, ts: Date.now() };
+    localStorage.setItem('alz_keys', JSON.stringify(state.keys));
+    status.innerHTML = `<div class="key-status valid">✓ Live validation passed — ${provider} key saved</div>`;
+    toast('Live key validated');
+    updateStatus();
+    renderSavedKeys();
+  } catch(err){
+    status.innerHTML = `<div class="key-status invalid">✕ ${err.message || 'Validation failed (CORS or invalid key)'}</div>`;
+    toast('Validation failed — see status','error');
+    if(confirm('Live check failed (often CORS). Still save the key for use inside the Bubble?')){
+      state.keys[provider] = { key, endpoint: conf.base || endpoint, ts: Date.now() };
       localStorage.setItem('alz_keys', JSON.stringify(state.keys));
-      state.validated = true;
-      status.innerHTML = `<div class="key-status valid">✓ ${provider} key valid & saved locally</div>`;
-      toast('Key validated');
+      status.innerHTML = `<div class="key-status valid">✓ Key saved (live check skipped due to CORS)</div>`;
       updateStatus();
       renderSavedKeys();
-    } else {
-      status.innerHTML = `<div class="key-status invalid">✕ Invalid key format</div>`;
-      toast('Validation failed','error');
     }
-    $('validateBtn').disabled = false;
-  }, 900);
+  }
+  $('validateBtn').disabled = false;
 }
 
 function renderSavedKeys(){
   const box = $('savedKeys');
   const entries = Object.entries(state.keys);
-  if(!entries.length){ box.innerHTML = '<div style="color:var(--text3);font-size:13px">No keys saved yet</div>'; return; }
+  if(!entries.length){ box.innerHTML = '<div style="color:var(--text3);font-size:13px">No keys yet</div>'; return; }
   box.innerHTML = entries.map(([p,v])=>`
     <div class="file-item">
-      <div class="file-info">
-        <div class="file-name">${p}</div>
-        <div class="file-size">••••${v.key.slice(-4)} · ${new Date(v.ts).toLocaleDateString()}</div>
-      </div>
+      <div class="file-info"><div class="file-name">${p}</div><div class="file-size">••••${(v.key||'').slice(-4)} · ${new Date(v.ts).toLocaleString()}</div></div>
       <button class="file-remove" onclick="removeKey('${p}')">✕</button>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
-
-function removeKey(p){
-  delete state.keys[p];
-  localStorage.setItem('alz_keys', JSON.stringify(state.keys));
-  state.validated = Object.keys(state.keys).length > 0;
-  renderSavedKeys();
-  updateStatus();
-  toast('Key removed');
-}
+function removeKey(p){ delete state.keys[p]; localStorage.setItem('alz_keys',JSON.stringify(state.keys)); renderSavedKeys(); updateStatus(); toast('Key removed'); }
 
 function renderModels(){
-  $('modelGrid').innerHTML = MODELS.map(m=>`
-    <div class="model-card ${state.selectedModels.includes(m.id)?'selected':''}" data-id="${m.id}" onclick="toggleModel('${m.id}')">
+  $('modelGrid').innerHTML = MODELS.map(m=>{
+    const hasKey = !!state.keys[m.provider] || !!state.keys.openrouter;
+    return `<div class="model-card ${state.selectedModels.includes(m.id)?'selected':''}" onclick="toggleModel('${m.id}')">
       <div class="model-name">${m.name}</div>
-      <div class="model-meta">${m.provider}</div>
+      <div class="model-meta">${m.provider}${hasKey?' · key ready':' · needs key'}</div>
       <span class="model-badge">${m.badge}</span>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
+function toggleModel(id){ const i=state.selectedModels.indexOf(id); if(i>-1)state.selectedModels.splice(i,1); else state.selectedModels.push(id); renderModels(); }
+function saveModels(){ localStorage.setItem('alz_models',JSON.stringify(state.selectedModels)); toast(`Saved ${state.selectedModels.length} models`); updateStatus(); }
 
-function toggleModel(id){
-  const i = state.selectedModels.indexOf(id);
-  if(i>-1) state.selectedModels.splice(i,1);
-  else state.selectedModels.push(id);
+const dropZone=$('dropZone'), fileInput=$('fileInput');
+dropZone.onclick=()=>fileInput.click();
+dropZone.ondragover=e=>{e.preventDefault();dropZone.classList.add('dragover')};
+dropZone.ondragleave=()=>dropZone.classList.remove('dragover');
+dropZone.ondrop=e=>{e.preventDefault();dropZone.classList.remove('dragover');handleFiles(e.dataTransfer.files)};
+fileInput.onchange=e=>handleFiles(e.target.files);
+function handleFiles(list){
+  [...list].forEach(f=>{
+    if(f.size>20*1024*1024){toast(f.name+' too large','error');return}
+    const r=new FileReader();
+    r.onload=ev=>{state.files.push({name:f.name,size:f.size,type:f.type,data:ev.target.result});renderFiles();toast(f.name+' added')};
+    if(f.type.startsWith('image/'))r.readAsDataURL(f);else r.readAsText(f);
+  });
+}
+function renderFiles(){
+  $('fileList').innerHTML=state.files.map((f,i)=>`
+    <div class="file-item">
+      ${f.type.startsWith('image/')?`<img src="${f.data}">`:`<div style="width:40px;height:40px;border-radius:6px;background:var(--bg4);display:flex;align-items:center;justify-content:center">📄</div>`}
+      <div class="file-info"><div class="file-name">${f.name}</div><div class="file-size">${(f.size/1024).toFixed(1)} KB</div></div>
+      <button class="file-remove" onclick="removeFile(${i})">✕</button>
+    </div>`).join('');
+}
+function removeFile(i){state.files.splice(i,1);renderFiles()}
+
+function updateStatus(){
+  const hasKey=Object.keys(state.keys).length>0;
+  const hasModels=state.selectedModels.length>0;
+  $('step-key').classList.toggle('done',hasKey);
+  $('step-mcp').classList.toggle('done',state.mcpConnected);
+  $('step-bubble').classList.toggle('done',state.bubbleReady);
+  $('cstep1').classList.toggle('done',hasKey);
+  $('cstep2').classList.toggle('done',hasModels);
+  $('cstep3').classList.toggle('done',state.files.length>0);
+  $('cstep4').classList.toggle('done',state.mcpConnected);
+  const dot=$('statusDot'),txt=$('statusText');
+  if(state.mcpConnected){dot.classList.add('online');txt.textContent='Session Ready'}
+  else if(hasKey){dot.classList.remove('online');txt.textContent='Key Ready'}
+  else{dot.classList.remove('online');txt.textContent='Disconnected'}
+  $('downloadBtn').disabled=!(hasKey && state.mcpConnected);
   renderModels();
 }
 
-function saveModels(){
-  localStorage.setItem('alz_models', JSON.stringify(state.selectedModels));
-  toast(`Saved ${state.selectedModels.length} models`);
-  updateStatus();
-}
-
-const dropZone = $('dropZone');
-const fileInput = $('fileInput');
-dropZone.addEventListener('click', ()=>fileInput.click());
-dropZone.addEventListener('dragover', e=>{ e.preventDefault(); dropZone.classList.add('dragover'); });
-dropZone.addEventListener('dragleave', ()=>dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop', e=>{
-  e.preventDefault(); dropZone.classList.remove('dragover');
-  handleFiles(e.dataTransfer.files);
-});
-fileInput.addEventListener('change', e=>handleFiles(e.target.files));
-
-function handleFiles(fileList){
-  [...fileList].forEach(f=>{
-    if(f.size > 25*1024*1024){ toast(f.name+' too large','error'); return; }
-    const reader = new FileReader();
-    reader.onload = ev=>{
-      state.files.push({ name:f.name, size:f.size, type:f.type, data:ev.target.result });
-      renderFiles();
-      toast(f.name+' added');
-    };
-    if(f.type.startsWith('image/')) reader.readAsDataURL(f);
-    else reader.readAsText(f);
-  });
-}
-
-function renderFiles(){
-  $('fileList').innerHTML = state.files.map((f,i)=>`
-    <div class="file-item">
-      ${f.type.startsWith('image/') ? `<img src="${f.data}">` : `<div style="width:40px;height:40px;border-radius:6px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:18px">📄</div>`}
-      <div class="file-info">
-        <div class="file-name">${f.name}</div>
-        <div class="file-size">${(f.size/1024).toFixed(1)} KB</div>
-      </div>
-      <button class="file-remove" onclick="removeFile(${i})">✕</button>
-    </div>
-  `).join('');
-}
-
-function removeFile(i){
-  state.files.splice(i,1);
-  renderFiles();
-}
-
-function updateStatus(){
-  const hasKey = Object.keys(state.keys).length > 0;
-  const hasModels = state.selectedModels.length > 0;
-  $('step-key').classList.toggle('done', hasKey);
-  $('step-mcp').classList.toggle('done', state.mcpConnected);
-  $('step-bubble').classList.toggle('done', state.bubbleReady);
-  $('cstep1').classList.toggle('done', hasKey);
-  $('cstep2').classList.toggle('done', hasModels);
-  $('cstep3').classList.toggle('done', state.files.length > 0);
-  $('cstep4').classList.toggle('done', state.mcpConnected);
-
-  const dot = $('statusDot');
-  const txt = $('statusText');
-  if(state.mcpConnected){
-    dot.classList.add('online');
-    txt.textContent = 'MCP Online';
-  } else if(hasKey){
-    dot.classList.remove('online');
-    txt.textContent = 'Key Ready';
-  } else {
-    dot.classList.remove('online');
-    txt.textContent = 'Disconnected';
-  }
-  $('downloadBtn').disabled = !state.mcpConnected;
+function copyMcp(){
+  const conf = `{\n  "mcpServers": {\n    "Roblox_Studio": {\n      "command": "cmd.exe",\n      "args": [\n        "/c",\n        "cd /d %LOCALAPPDATA%\\\\Roblox && .\\\\mcp.bat"\n      ]\n    }\n  }\n}`;
+  navigator.clipboard.writeText(conf).then(()=>toast('MCP config copied'));
 }
 
 function connectMCP(){
-  if(Object.keys(state.keys).length === 0){ toast('Validate a key first','error'); switchPage('keys'); return; }
-  if(state.selectedModels.length === 0){ toast('Select at least one model','error'); switchPage('models'); return; }
-
-  const log = $('connectLog');
-  const btn = $('connectBtn');
-  btn.disabled = true;
-  log.innerHTML = '';
-
-  const steps = [
-    'Initializing MCP client...',
-    'Authenticating with stored keys...',
-    `Registering ${state.selectedModels.length} models...`,
-    state.files.length ? `Injecting ${state.files.length} files into context...` : 'No files — skipping injection...',
-    'Opening WebSocket to MCP endpoint...',
-    'Handshake complete. Tools registered: roblox.read, roblox.write, roblox.script, file.upload',
-    'MCP session live.'
+  if(Object.keys(state.keys).length===0){toast('Validate a key first','error');switchPage('keys');return}
+  if(state.selectedModels.length===0){toast('Select models','error');switchPage('models');return}
+  const log=$('connectLog'),btn=$('connectBtn');
+  btn.disabled=true;log.innerHTML='';
+  const steps=[
+    'Checking validated keys...',
+    `Models ready: ${state.selectedModels.join(', ')}`,
+    state.files.length?`Context files: ${state.files.length}`:'No extra files',
+    'Roblox Studio MCP config ready (use the copy button above)',
+    'Session marked ready for Chat Bubble'
   ];
-
-  let i = 0;
-  function next(){
-    if(i >= steps.length){
-      state.mcpConnected = true;
-      state.bubbleReady = true;
-      updateStatus();
-      btn.disabled = false;
-      toast('MCP connected');
-      return;
+  let i=0;
+  (function next(){
+    if(i>=steps.length){
+      state.mcpConnected=true;state.bubbleReady=true;updateStatus();btn.disabled=false;toast('Session ready');return;
     }
-    log.innerHTML += `> ${steps[i]}<br>`;
-    i++;
-    setTimeout(next, 420 + Math.random()*200);
-  }
-  next();
+    log.innerHTML+=`> ${steps[i]}<br>`;i++;setTimeout(next,380);
+  })();
 }
 
 function downloadBubble(){
-  if(!state.mcpConnected){ toast('Connect MCP first','error'); return; }
+  if(!state.mcpConnected||!Object.keys(state.keys).length){toast('Finish keys + session first','error');return}
 
-  const modelsJson = JSON.stringify(state.selectedModels);
-  const keysJson = JSON.stringify(state.keys);
-  const filesMeta = JSON.stringify(state.files.map(f=>({name:f.name,type:f.type,size:f.size})));
+  const payload = {
+    keys: state.keys,
+    models: state.selectedModels,
+    modelMeta: MODELS.filter(m=>state.selectedModels.includes(m.id)),
+    files: state.files.map(f=>({name:f.name,type:f.type,size:f.size,data:f.data?.startsWith('data:')?f.data:undefined, text: !f.type.startsWith('image/') ? f.data : undefined}))
+  };
 
   const bubbleHTML = `<!DOCTYPE html>
 <html lang="en">
@@ -713,54 +436,26 @@ function downloadBubble(){
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AlzGUI Bubble</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;overflow:hidden;background:transparent;font-family:Inter,system-ui,sans-serif}
-#bubble{
-  position:fixed;width:380px;height:520px;bottom:24px;right:24px;
-  background:#0e0e12;border:1px solid #2a2a35;border-radius:24px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 40px rgba(124,92,255,0.15);
-  display:flex;flex-direction:column;overflow:hidden;user-select:none;
-  backdrop-filter:blur(20px);
-}
-#bubble.dragging{opacity:0.92;cursor:grabbing}
-.header{
-  padding:14px 16px;display:flex;align-items:center;gap:10px;
-  background:linear-gradient(135deg,#1a1a22,#15151c);border-bottom:1px solid #2a2a35;
-  cursor:grab;
-}
+*{margin:0;padding:0;box-sizing:border-box}html,body{height:100%;overflow:hidden;background:transparent;font-family:Inter,system-ui,sans-serif}
+#bubble{position:fixed;width:400px;height:560px;bottom:24px;right:24px;background:#0e0e12;border:1px solid #2a2a35;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 40px rgba(124,92,255,.18);display:flex;flex-direction:column;overflow:hidden;user-select:none}
+#bubble.dragging{opacity:.93;cursor:grabbing}
+.header{padding:14px 16px;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#1a1a22,#15151c);border-bottom:1px solid #2a2a35;cursor:grab}
 .header:active{cursor:grabbing}
-.avatar{
-  width:32px;height:32px;border-radius:50%;
-  background:linear-gradient(135deg,#7c5cff,#22d3ee);
-  display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;
-}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#22d3ee);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .title{font-size:13px;font-weight:600;color:#f0f0f5;flex:1}
-.model-select{
-  background:#1f1f28;border:1px solid #2a2a35;color:#c4b5fd;font-size:11px;
-  padding:4px 8px;border-radius:8px;outline:none;max-width:120px;
-}
+.model-select{background:#1f1f28;border:1px solid #2a2a35;color:#c4b5fd;font-size:11px;padding:4px 8px;border-radius:8px;outline:none;max-width:140px}
 .messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
-.msg{max-width:88%;padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.5;word-break:break-word}
+.msg{max-width:90%;padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.55;word-break:break-word;white-space:pre-wrap}
 .msg.user{align-self:flex-end;background:#7c5cff;color:#fff;border-bottom-right-radius:4px}
 .msg.ai{align-self:flex-start;background:#1a1a22;color:#e0e0e8;border:1px solid #2a2a35;border-bottom-left-radius:4px}
 .msg.system{align-self:center;background:transparent;color:#6a6a7a;font-size:11px}
-.input-row{
-  padding:12px;border-top:1px solid #2a2a35;display:flex;gap:8px;background:#0e0e12;
-}
-#input{
-  flex:1;background:#1a1a22;border:1px solid #2a2a35;border-radius:12px;
-  padding:10px 12px;color:#f0f0f5;font-size:13px;outline:none;resize:none;max-height:80px;
-  font-family:inherit;
-}
+.msg.error{align-self:center;color:#f87171;font-size:12px}
+.input-row{padding:12px;border-top:1px solid #2a2a35;display:flex;gap:8px;background:#0e0e12}
+#input{flex:1;background:#1a1a22;border:1px solid #2a2a35;border-radius:12px;padding:10px 12px;color:#f0f0f5;font-size:13px;outline:none;resize:none;max-height:90px;font-family:inherit}
 #input:focus{border-color:#7c5cff}
-#send{
-  width:40px;height:40px;border-radius:12px;border:none;
-  background:linear-gradient(135deg,#7c5cff,#a78bfa);color:#fff;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-#send:hover{filter:brightness(1.1)}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-thumb{background:#3a3a45;border-radius:2px}
+#send{width:40px;height:40px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c5cff,#a78bfa);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+#send:disabled{opacity:.5;cursor:not-allowed}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#3a3a45;border-radius:2px}
 .brand{font-size:9px;color:#4a4a55;text-align:center;padding:4px 0 8px}
 </style>
 </head>
@@ -772,18 +467,17 @@ html,body{height:100%;overflow:hidden;background:transparent;font-family:Inter,s
     <select class="model-select" id="modelSelect"></select>
   </div>
   <div class="messages" id="messages">
-    <div class="msg system">Bubble online · no window controls · drag to move</div>
+    <div class="msg system">Bubble online · real API · no window controls · drag to move</div>
   </div>
   <div class="input-row">
-    <textarea id="input" rows="1" placeholder="Ask anything..."></textarea>
+    <textarea id="input" rows="1" placeholder="Message the model..."></textarea>
     <button id="send">➤</button>
   </div>
-  <div class="brand">ALZ · BY ALZ♥︎ · discord.gg/RzwyR6nRZb</div>
+  <div class="brand">ALZ · BY ALZ♥︎ · real models</div>
 </div>
 <script>
-const MODELS = ${modelsJson};
-const KEYS = ${keysJson};
-const FILES = ${filesMeta};
+const PAYLOAD = ${JSON.stringify(payload)};
+const PROVIDERS = ${JSON.stringify(PROVIDERS)};
 const bubble = document.getElementById('bubble');
 const handle = document.getElementById('dragHandle');
 const messages = document.getElementById('messages');
@@ -791,73 +485,134 @@ const input = document.getElementById('input');
 const sendBtn = document.getElementById('send');
 const modelSelect = document.getElementById('modelSelect');
 
-MODELS.forEach(id=>{
+PAYLOAD.modelMeta.forEach(m => {
   const o = document.createElement('option');
-  o.value = id; o.textContent = id;
+  o.value = m.id; o.textContent = m.name + ' (' + m.provider + ')';
   modelSelect.appendChild(o);
 });
 
 let ox=0,oy=0,dragging=false;
-handle.addEventListener('mousedown',e=>{
-  dragging=true; bubble.classList.add('dragging');
-  ox=e.clientX-bubble.offsetLeft; oy=e.clientY-bubble.offsetTop;
-});
-document.addEventListener('mousemove',e=>{
-  if(!dragging)return;
-  bubble.style.left=(e.clientX-ox)+'px';
-  bubble.style.top=(e.clientY-oy)+'px';
+handle.addEventListener('mousedown', e => { dragging=true; bubble.classList.add('dragging'); ox=e.clientX-bubble.offsetLeft; oy=e.clientY-bubble.offsetTop; });
+document.addEventListener('mousemove', e => {
+  if(!dragging) return;
+  bubble.style.left = (e.clientX-ox)+'px'; bubble.style.top = (e.clientY-oy)+'px';
   bubble.style.right='auto'; bubble.style.bottom='auto';
 });
-document.addEventListener('mouseup',()=>{ dragging=false; bubble.classList.remove('dragging'); });
+document.addEventListener('mouseup', () => { dragging=false; bubble.classList.remove('dragging'); });
 
-function addMsg(text,role){
-  const d=document.createElement('div');
-  d.className='msg '+role;
-  d.textContent=text;
+function addMsg(text, role){
+  const d = document.createElement('div');
+  d.className = 'msg ' + role;
+  d.textContent = text;
   messages.appendChild(d);
-  messages.scrollTop=messages.scrollHeight;
+  messages.scrollTop = messages.scrollHeight;
+  return d;
+}
+
+function buildContext(){
+  let ctx = '';
+  (PAYLOAD.files||[]).forEach(f => {
+    if(f.text) ctx += `\\n\\n[File: ${f.name}]\\n${f.text.slice(0,8000)}`;
+    else if(f.data && f.data.startsWith('data:')) ctx += `\\n\\n[Image attached: ${f.name}]`;
+  });
+  return ctx;
+}
+
+async function callModel(modelId, userText){
+  const meta = PAYLOAD.modelMeta.find(m => m.id === modelId) || { provider: 'openai', id: modelId };
+  let provider = meta.provider;
+  let keyObj = PAYLOAD.keys[provider] || PAYLOAD.keys.openrouter;
+  if(!keyObj && PAYLOAD.keys.openrouter){ provider = 'openrouter'; keyObj = PAYLOAD.keys.openrouter; }
+  if(!keyObj) throw new Error('No API key for provider: ' + provider);
+
+  const conf = { ...PROVIDERS[provider] };
+  if(provider === 'custom' || !conf.base) conf.base = keyObj.endpoint;
+  const key = keyObj.key;
+  const fullPrompt = userText + buildContext();
+
+  if(provider === 'anthropic'){
+    const res = await fetch(conf.base + conf.chatPath, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: modelId,
+        max_tokens: 4096,
+        messages: [{ role: 'user', content: fullPrompt }]
+      })
+    });
+    if(!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    return data.content?.[0]?.text || JSON.stringify(data);
+  }
+
+  if(provider === 'google'){
+    const url = `${conf.base}/models/${modelId}:generateContent?key=${encodeURIComponent(key)}`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }] })
+    });
+    if(!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || JSON.stringify(data);
+  }
+
+  const res = await fetch(conf.base + conf.chatPath, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + key
+    },
+    body: JSON.stringify({
+      model: modelId,
+      messages: [{ role: 'user', content: fullPrompt }],
+      max_tokens: 4096,
+      temperature: 0.7
+    })
+  });
+  if(!res.ok) throw new Error(await res.text());
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content || JSON.stringify(data);
 }
 
 async function send(){
-  const text=input.value.trim();
-  if(!text)return;
-  addMsg(text,'user');
-  input.value='';
-  const model=modelSelect.value;
-  addMsg('Thinking with '+model+'...','system');
-  setTimeout(()=>{
-    messages.lastChild.remove();
-    const replies=[
-      'Got it. I have full context of your files and Roblox session via MCP.',
-      'Analyzing... Ready to inject scripts, read instances, or generate code.',
-      'All frontier models unlocked. What do you want to build or fix?',
-      'Context loaded. Photos and assets are available in this session.'
-    ];
-    addMsg(replies[Math.floor(Math.random()*replies.length)],'ai');
-  },800+Math.random()*600);
+  const text = input.value.trim();
+  if(!text) return;
+  addMsg(text, 'user');
+  input.value = '';
+  sendBtn.disabled = true;
+  const thinking = addMsg('Calling ' + modelSelect.value + '...', 'system');
+  try {
+    const reply = await callModel(modelSelect.value, text);
+    thinking.remove();
+    addMsg(reply, 'ai');
+  } catch(err){
+    thinking.remove();
+    addMsg('Error: ' + (err.message || err).toString().slice(0,400), 'error');
+  }
+  sendBtn.disabled = false;
 }
 
-sendBtn.addEventListener('click',send);
-input.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();} });
+sendBtn.addEventListener('click', send);
+input.addEventListener('keydown', e => { if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
 <\/script>
 </body>
 </html>`;
 
   const blob = new Blob([bubbleHTML], {type:'text/html'});
-  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
+  a.href = URL.createObjectURL(blob);
   a.download = 'AlzGUI-Bubble.html';
   a.click();
-  URL.revokeObjectURL(url);
-  toast('Bubble downloaded — pure, no chrome');
+  URL.revokeObjectURL(a.href);
+  toast('Bubble downloaded — real API calls enabled');
 }
 
-// Init
-renderModels();
-renderSavedKeys();
-updateStatus();
-if(Object.keys(state.keys).length) state.validated = true;
+renderModels(); renderSavedKeys(); updateStatus();
 </script>
 </body>
 </html>
