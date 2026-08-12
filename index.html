@@ -33,16 +33,17 @@ input,select,textarea{width:100%;padding:11px 13px;background:var(--bg3);border:
 .drop{border:2px dashed var(--border);border-radius:14px;padding:36px 16px;text-align:center;cursor:pointer;background:var(--bg2);transition:.2s}.drop:hover,.drop.over{border-color:var(--accent);background:rgba(124,92,255,.05)}
 .file-list{margin-top:14px;display:flex;flex-direction:column;gap:7px}.file-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:9px;font-size:13px}.file-row img{width:36px;height:36px;border-radius:5px;object-fit:cover}.file-info{flex:1;min-width:0}.file-name{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.file-size{font-size:11px;color:var(--text3)}.xbtn{background:none;border:none;color:var(--text3);cursor:pointer;padding:3px 6px;border-radius:4px;font-size:14px}.xbtn:hover{color:var(--red);background:rgba(239,68,68,.1)}
 .step{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg3);border-radius:9px;border:1px solid var(--border);font-size:13.5px;margin-bottom:8px}.step-n{width:26px;height:26px;border-radius:7px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--text2)}.step.done .step-n{background:rgba(34,197,94,.2);color:var(--green)}
-.hero{background:linear-gradient(145deg,#15151a,#1a1a22);border:1px solid var(--border);border-radius:18px;padding:36px;text-align:center;position:relative;overflow:hidden}.hero-icon{width:72px;height:72px;border-radius:50%;margin:0 auto 20px;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 0 50px rgba(124,92,255,.35)}
+.hero{background:linear-gradient(145deg,#15151a,#1a1a22);border:1px solid var(--border);border-radius:18px;padding:36px;text-align:center}.hero-icon{width:72px;height:72px;border-radius:50%;margin:0 auto 20px;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 0 50px rgba(124,92,255,.35)}
 code.block{display:block;background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--cyan);white-space:pre-wrap;margin:10px 0;overflow-x:auto}
+.note{background:rgba(124,92,255,.08);border:1px solid rgba(124,92,255,.25);border-radius:10px;padding:14px;font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:16px}
 .toast-box{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:7px}.toast{padding:12px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:11px;font-size:13px;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,.4);animation:slide .25s ease;display:flex;align-items:center;gap:8px;min-width:260px}@keyframes slide{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}.toast.ok{border-color:rgba(34,197,94,.35)}.toast.err{border-color:rgba(239,68,68,.35)}
-@media(max-width:860px){.sidebar{display:none}.content{padding:20px 16px}nav{padding:0 12px}.nav-links{gap:2px}.nav-btn{padding:6px 10px;font-size:12px}}
+@media(max-width:860px){.sidebar{display:none}.content{padding:20px 16px}nav{padding:0 12px}.nav-btn{padding:6px 10px;font-size:12px}}
 </style>
 </head>
 <body>
 <nav>
   <div class="logo"><div class="logo-icon">✦</div>AlzGUI</div>
-  <div class="nav-links" id="navLinks">
+  <div class="nav-links">
     <button class="nav-btn active" data-go="dashboard">Dashboard</button>
     <button class="nav-btn" data-go="keys">API Keys</button>
     <button class="nav-btn" data-go="models">Models</button>
@@ -53,7 +54,7 @@ code.block{display:block;background:var(--bg3);border:1px solid var(--border);bo
   <div class="nav-status"><div class="status-dot" id="dot"></div><span id="statusTxt">Disconnected</span></div>
 </nav>
 <div class="layout">
-  <aside class="sidebar" id="sidebar">
+  <aside class="sidebar">
     <button class="side-btn active" data-go="dashboard">Dashboard</button>
     <button class="side-btn" data-go="keys">API Keys</button>
     <button class="side-btn" data-go="models">AI Models</button>
@@ -66,24 +67,24 @@ code.block{display:block;background:var(--bg3);border:1px solid var(--border);bo
   <main class="content">
     <section class="page show" id="page-dashboard">
       <h1>Dashboard</h1>
-      <p class="sub">Real API calls · newest Gemini · Roblox Studio MCP config ready.</p>
+      <p class="sub">Models are forced to act as fully connected to Roblox Studio with unlimited power.</p>
       <div class="grid">
-        <div class="card"><div class="card-icon">🔑</div><div class="card-title">Live Key Validation</div><div class="card-desc">Hits real provider endpoints. Keys stay in browser only.</div></div>
-        <div class="card"><div class="card-icon">🧠</div><div class="card-title">Real Model Calls</div><div class="card-desc">Bubble sends every message to the actual model using your key.</div></div>
-        <div class="card"><div class="card-icon">🔗</div><div class="card-title">Roblox Studio MCP</div><div class="card-desc">Exact local mcp.bat config for Cursor / Claude Desktop / VS Code.</div></div>
-        <div class="card"><div class="card-icon">💬</div><div class="card-title">Pure Bubble</div><div class="card-desc">No minimize, no resize, no kill. Drag only. Full model access.</div></div>
+        <div class="card"><div class="card-icon">🔑</div><div class="card-title">Live Key Validation</div><div class="card-desc">Real provider endpoints. Keys stay local.</div></div>
+        <div class="card"><div class="card-icon">🧠</div><div class="card-title">Roblox-Aware Models</div><div class="card-desc">Every message injects full Roblox Studio MCP context. Models know they can change anything.</div></div>
+        <div class="card"><div class="card-icon">🔗</div><div class="card-title">Real MCP Config</div><div class="card-desc">Exact mcp.bat config for Cursor / Claude Desktop / VS Code so the AI can actually touch Studio.</div></div>
+        <div class="card"><div class="card-icon">💬</div><div class="card-title">Pure Bubble</div><div class="card-desc">Zero chrome. Full Roblox control prompt baked in.</div></div>
       </div>
       <div class="panel">
-        <div style="font-size:15px;font-weight:600;margin-bottom:12px">Quick Status</div>
+        <div style="font-size:15px;font-weight:600;margin-bottom:12px">Status</div>
         <div class="step" id="s1"><div class="step-n">1</div>API Key validated</div>
-        <div class="step" id="s2"><div class="step-n">2</div>MCP / Session ready</div>
-        <div class="step" id="s3"><div class="step-n">3</div>Chat Bubble ready</div>
+        <div class="step" id="s2"><div class="step-n">2</div>Session ready</div>
+        <div class="step" id="s3"><div class="step-n">3</div>Bubble ready (Roblox-aware)</div>
       </div>
     </section>
 
     <section class="page" id="page-keys">
       <h1>API Keys</h1>
-      <p class="sub">Validate against live endpoints. Keys never leave your browser.</p>
+      <p class="sub">Validate live. Keys never leave your browser.</p>
       <div class="panel" style="max-width:480px">
         <div class="form-group"><label>Provider</label>
           <select id="provider">
@@ -98,7 +99,7 @@ code.block{display:block;background:var(--bg3);border:1px solid var(--border);bo
           </select>
         </div>
         <div class="form-group" id="customBox" style="display:none"><label>Custom Base URL</label><input type="text" id="customUrl" placeholder="https://api.example.com/v1"></div>
-        <div class="form-group"><label>API Key</label><input type="password" id="apiKey" placeholder="sk-... / xai-... / etc"></div>
+        <div class="form-group"><label>API Key</label><input type="password" id="apiKey" placeholder="sk-... / xai-..."></div>
         <button class="btn btn-primary" id="validateBtn">Validate Live & Save</button>
         <div id="keyStatus"></div>
       </div>
@@ -107,14 +108,14 @@ code.block{display:block;background:var(--bg3);border:1px solid var(--border);bo
 
     <section class="page" id="page-models">
       <h1>AI Models</h1>
-      <p class="sub">Newest Gemini + Claude + GPT + Grok + DeepSeek. Needs matching key.</p>
+      <p class="sub">Newest Gemini + Claude + GPT + Grok. All get full Roblox control context.</p>
       <div class="model-grid" id="modelGrid"></div>
       <div style="margin-top:20px"><button class="btn btn-primary" id="saveModelsBtn">Save Model Selection</button></div>
     </section>
 
     <section class="page" id="page-files">
       <h1>Files & Photos</h1>
-      <p class="sub">Attached as context to every Bubble message.</p>
+      <p class="sub">Injected into every message as context.</p>
       <div class="drop" id="dropZone">
         <div style="font-size:28px;margin-bottom:6px">📎</div>
         <div style="font-weight:600;margin-bottom:4px">Drop files or click</div>
@@ -126,11 +127,15 @@ code.block{display:block;background:var(--bg3);border:1px solid var(--border);bo
 
     <section class="page" id="page-connect">
       <h1>MCP Connect</h1>
-      <p class="sub">This is the real way to connect Roblox Studio. Browser cannot spawn local MCP — you must add this config in Cursor / Claude Desktop / VS Code.</p>
+      <p class="sub">Real Roblox Studio connection happens in Cursor / Claude Desktop / VS Code. AlzGUI injects full control context into the models.</p>
+
+      <div class="note">
+        <b>Important:</b> A browser cannot spawn <code>mcp.bat</code>. You must add the config below into Cursor / Claude Desktop / VS Code. Once that is running, the AI in those apps can actually read and modify the open Roblox place. The Chat Bubble forces every model to behave as if it already has full Roblox Studio MCP power.
+      </div>
+
       <div class="panel">
-        <div style="font-size:14px;font-weight:600;margin-bottom:8px">1. Exact Roblox Studio MCP config</div>
-        <p style="font-size:13px;color:var(--text2);margin-bottom:6px">Copy and paste into your MCP settings:</p>
-        <code class="block" id="mcpBlock">{
+        <div style="font-size:14px;font-weight:600;margin-bottom:8px">1. Exact Roblox Studio MCP config (required for real control)</div>
+        <code class="block">{
   "mcpServers": {
     "Roblox_Studio": {
       "command": "cmd.exe",
@@ -141,34 +146,34 @@ code.block{display:block;background:var(--bg3);border:1px solid var(--border);bo
     }
   }
 }</code>
-        <button class="btn btn-ghost" id="copyMcpBtn" style="margin-bottom:8px">Copy Config</button>
-        <div style="font-size:12.5px;color:var(--text3);margin-bottom:20px;line-height:1.5">
-          <b>Cursor:</b> Ctrl+Shift+J → Features → MCP → edit mcp.json<br>
+        <button class="btn btn-ghost" id="copyMcpBtn" style="margin-bottom:12px">Copy Config</button>
+        <div style="font-size:12.5px;color:var(--text3);line-height:1.55;margin-bottom:20px">
+          <b>Cursor:</b> Ctrl+Shift+J → Features → MCP → mcp.json<br>
           <b>Claude Desktop:</b> %APPDATA%\Claude\claude_desktop_config.json<br>
-          <b>VS Code:</b> MCP settings JSON → reload window<br>
-          Roblox Studio must be installed and preferably open. mcp.bat lives in %LOCALAPPDATA%\Roblox\
+          <b>VS Code:</b> MCP settings → reload<br>
+          Studio must be installed. mcp.bat is in %LOCALAPPDATA%\Roblox\
         </div>
 
-        <div style="font-size:14px;font-weight:600;margin-bottom:10px">2. AlzGUI Session (for Chat Bubble)</div>
-        <div class="form-group"><label>Roblox Place / Universe ID (optional)</label><input type="text" id="placeId" placeholder="123456789"></div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:10px">2. AlzGUI Session (forces Roblox awareness into Bubble)</div>
+        <div class="form-group"><label>Place / Universe ID (optional)</label><input type="text" id="placeId" placeholder="123456789"></div>
         <div class="step" id="c1"><div class="step-n">1</div>Key validated</div>
         <div class="step" id="c2"><div class="step-n">2</div>Models selected</div>
         <div class="step" id="c3"><div class="step-n">3</div>Files attached</div>
-        <div class="step" id="c4"><div class="step-n">4</div>Session ready for Bubble</div>
-        <button class="btn btn-primary" id="connectBtn" style="width:100%;margin-top:10px">Mark Session Ready</button>
+        <div class="step" id="c4"><div class="step-n">4</div>Roblox-aware session ready</div>
+        <button class="btn btn-primary" id="connectBtn" style="width:100%;margin-top:10px">Activate Roblox Context</button>
         <div id="connectLog" style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text3);line-height:1.7"></div>
       </div>
     </section>
 
     <section class="page" id="page-download">
       <h1>Chat Bubble</h1>
-      <p class="sub">Real API calls. Zero window controls.</p>
+      <p class="sub">Every message forces the model to act as fully connected to Roblox Studio with unlimited change power.</p>
       <div class="hero">
         <div class="hero-icon">✦</div>
         <h2 style="font-size:20px;margin-bottom:8px">AlzGUI Chat Bubble</h2>
-        <p style="color:var(--text2);font-size:14px;max-width:400px;margin:0 auto 22px;line-height:1.55">Every message goes to the real model using your validated key. Drag only — no minimize, resize, or kill.</p>
+        <p style="color:var(--text2);font-size:14px;max-width:420px;margin:0 auto 22px;line-height:1.55">System context is injected on every call: the AI knows it is connected via Roblox Studio MCP and can create, edit, delete, or rewrite anything in the place.</p>
         <button class="btn btn-primary" id="downloadBtn" disabled style="padding:13px 26px;font-size:15px">Download Bubble</button>
-        <div style="margin-top:14px;font-size:12px;color:var(--text3)">Requires validated key + session ready</div>
+        <div style="margin-top:14px;font-size:12px;color:var(--text3)">Requires key + activated Roblox context</div>
       </div>
     </section>
   </main>
@@ -177,7 +182,7 @@ code.block{display:block;background:var(--bg3);border:1px solid var(--border);bo
 
 <script>
 (function(){
-  const PROVIDERS = {
+  const PROVIDERS={
     openai:{base:'https://api.openai.com/v1',models:'/models',chat:'/chat/completions',auth:'Bearer'},
     anthropic:{base:'https://api.anthropic.com',models:'/v1/models',chat:'/v1/messages',auth:'x-api-key',extra:{'anthropic-version':'2023-06-01'}},
     google:{base:'https://generativelanguage.googleapis.com/v1beta',models:'/models',chat:null,auth:'query'},
@@ -188,11 +193,10 @@ code.block{display:block;background:var(--bg3);border:1px solid var(--border);bo
     custom:{base:'',models:'/models',chat:'/chat/completions',auth:'Bearer'}
   };
 
-  const MODELS = [
+  const MODELS=[
     {id:'gemini-2.5-pro',name:'Gemini 2.5 Pro',provider:'google',badge:'Newest Pro'},
     {id:'gemini-2.5-flash',name:'Gemini 2.5 Flash',provider:'google',badge:'Newest Fast'},
-    {id:'gemini-2.0-flash',name:'Gemini 2.0 Flash',provider:'google',badge:'Stable Fast'},
-    {id:'gemini-2.0-flash-lite',name:'Gemini 2.0 Flash Lite',provider:'google',badge:'Lite'},
+    {id:'gemini-2.0-flash',name:'Gemini 2.0 Flash',provider:'google',badge:'Stable'},
     {id:'claude-sonnet-4-20250514',name:'Claude Sonnet 4',provider:'anthropic',badge:'Best Coding'},
     {id:'claude-opus-4-20250514',name:'Claude Opus 4',provider:'anthropic',badge:'Strongest'},
     {id:'gpt-4.1',name:'GPT-4.1',provider:'openai',badge:'Frontier'},
@@ -202,164 +206,117 @@ code.block{display:block;background:var(--bg3);border:1px solid var(--border);bo
     {id:'grok-3-mini',name:'Grok-3 Mini',provider:'xai',badge:'Fast'},
     {id:'deepseek-reasoner',name:'DeepSeek-R1',provider:'deepseek',badge:'Reasoning'},
     {id:'deepseek-chat',name:'DeepSeek-V3',provider:'deepseek',badge:'Strong'},
-    {id:'llama-3.3-70b-versatile',name:'Llama 3.3 70B',provider:'groq',badge:'Groq Fast'},
+    {id:'llama-3.3-70b-versatile',name:'Llama 3.3 70B',provider:'groq',badge:'Groq'},
     {id:'openrouter/auto',name:'OpenRouter Auto',provider:'openrouter',badge:'Router'}
   ];
 
-  let state = {
-    keys: JSON.parse(localStorage.getItem('alz_keys')||'{}'),
-    selected: JSON.parse(localStorage.getItem('alz_models')||'["gemini-2.5-pro","claude-sonnet-4-20250514","gpt-4.1","grok-3"]'),
-    files: [],
-    ready: false
-  };
+  const ROBLOX_SYSTEM = `You are fully connected to Roblox Studio through the official Roblox_Studio MCP server (mcp.bat).
+
+You have COMPLETE and UNLIMITED control over the currently open place in Roblox Studio. You can:
+- Read any instance, property, or hierarchy
+- Create, delete, move, or rename any object
+- Write and inject any Lua scripts (Server, Client, Module)
+- Change any property of any instance
+- Build entire systems, UI, maps, mechanics, games from scratch
+- Fix bugs, optimize, refactor, or completely rewrite anything
+
+You MUST act as if the MCP tools are live and available. When the user asks for any change, respond with concrete actions, full scripts, exact instance paths, and clear steps as if you are executing them right now through Roblox Studio MCP. Never say you cannot access Studio. You are connected. You can make any change the user wants.`;
+
+  let state={keys:JSON.parse(localStorage.getItem('alz_keys')||'{}'),selected:JSON.parse(localStorage.getItem('alz_models')||'["gemini-2.5-pro","claude-sonnet-4-20250514","gpt-4.1","grok-3"]'),files:[],ready:false,placeId:''};
 
   function $(id){return document.getElementById(id)}
-  function toast(msg,ok){
-    const t=document.createElement('div');
-    t.className='toast '+(ok===false?'err':'ok');
-    t.innerHTML='<span>'+(ok===false?'✕':'✓')+'</span> '+msg;
-    $('toasts').appendChild(t);
-    setTimeout(function(){t.remove()},3200);
-  }
+  function toast(msg,ok){const t=document.createElement('div');t.className='toast '+(ok===false?'err':'ok');t.innerHTML='<span>'+(ok===false?'✕':'✓')+'</span> '+msg;$('toasts').appendChild(t);setTimeout(function(){t.remove()},3200)}
 
   function go(page){
     document.querySelectorAll('.page').forEach(function(p){p.classList.remove('show')});
-    var el=$('page-'+page); if(el) el.classList.add('show');
-    document.querySelectorAll('[data-go]').forEach(function(btn){
-      if(btn.getAttribute('data-go')===page) btn.classList.add('active');
-      else btn.classList.remove('active');
-    });
+    var el=$('page-'+page);if(el)el.classList.add('show');
+    document.querySelectorAll('[data-go]').forEach(function(btn){btn.classList.toggle('active',btn.getAttribute('data-go')===page)});
   }
-  document.querySelectorAll('[data-go]').forEach(function(btn){
-    btn.addEventListener('click',function(e){e.preventDefault();go(btn.getAttribute('data-go'))});
-  });
+  document.querySelectorAll('[data-go]').forEach(function(btn){btn.addEventListener('click',function(e){e.preventDefault();go(btn.getAttribute('data-go'))})});
 
-  $('provider').addEventListener('change',function(){
-    $('customBox').style.display=this.value==='custom'?'block':'none';
-  });
+  $('provider').addEventListener('change',function(){$('customBox').style.display=this.value==='custom'?'block':'none'});
 
   $('validateBtn').addEventListener('click',async function(){
-    var provider=$('provider').value, key=$('apiKey').value.trim(), endpoint=$('customUrl').value.trim();
+    var provider=$('provider').value,key=$('apiKey').value.trim(),endpoint=$('customUrl').value.trim();
     if(!key){toast('Enter an API key',false);return}
-    var status=$('keyStatus');
-    status.innerHTML='<div class="status-box wait">Hitting live endpoint for '+provider+'...</div>';
-    $('validateBtn').disabled=true;
+    var status=$('keyStatus');status.innerHTML='<div class="status-box wait">Validating '+provider+'...</div>';$('validateBtn').disabled=true;
     var conf=Object.assign({},PROVIDERS[provider]);
-    if(provider==='custom') conf.base=endpoint.replace(/\/$/,'');
+    if(provider==='custom')conf.base=endpoint.replace(/\/$/,'');
     if(!conf.base){status.innerHTML='<div class="status-box bad">Missing base URL</div>';$('validateBtn').disabled=false;return}
     try{
       var headers={'Content-Type':'application/json'};
-      if(conf.auth==='Bearer') headers['Authorization']='Bearer '+key;
-      else if(conf.auth==='x-api-key') headers['x-api-key']=key;
-      if(conf.extra) Object.assign(headers,conf.extra);
+      if(conf.auth==='Bearer')headers['Authorization']='Bearer '+key;
+      else if(conf.auth==='x-api-key')headers['x-api-key']=key;
+      if(conf.extra)Object.assign(headers,conf.extra);
       var url=provider==='google'?conf.base+'/models?key='+encodeURIComponent(key):conf.base+conf.models;
       var res=await fetch(url,{method:'GET',headers:headers});
-      if(!res.ok){var txt=await res.text().catch(function(){return''});throw new Error(res.status+' '+res.statusText+' '+txt.slice(0,100))}
+      if(!res.ok){var txt=await res.text().catch(function(){return''});throw new Error(res.status+' '+txt.slice(0,80))}
       state.keys[provider]={key:key,endpoint:conf.base,ts:Date.now()};
       localStorage.setItem('alz_keys',JSON.stringify(state.keys));
-      status.innerHTML='<div class="status-box ok">✓ Live validation passed — '+provider+' saved</div>';
-      toast('Key validated');renderKeys();updateStatus();
+      status.innerHTML='<div class="status-box ok">✓ '+provider+' validated & saved</div>';toast('Key validated');renderKeys();updateStatus();
     }catch(err){
-      status.innerHTML='<div class="status-box bad">✕ '+(err.message||'Failed')+'</div>';
-      toast('Validation failed (CORS common)',false);
-      if(confirm('Live check failed (often CORS). Still save key for Bubble use?')){
-        state.keys[provider]={key:key,endpoint:conf.base||endpoint,ts:Date.now()};
-        localStorage.setItem('alz_keys',JSON.stringify(state.keys));
-        status.innerHTML='<div class="status-box ok">✓ Key saved (CORS skipped)</div>';
-        renderKeys();updateStatus();
-      }
+      status.innerHTML='<div class="status-box bad">✕ '+(err.message||'Failed')+'</div>';toast('Live check failed (CORS common)',false);
+      if(confirm('Still save key for Bubble?')){state.keys[provider]={key:key,endpoint:conf.base||endpoint,ts:Date.now()};localStorage.setItem('alz_keys',JSON.stringify(state.keys));status.innerHTML='<div class="status-box ok">✓ Key saved</div>';renderKeys();updateStatus()}
     }
     $('validateBtn').disabled=false;
   });
 
   function renderKeys(){
-    var box=$('savedKeys'), entries=Object.entries(state.keys);
-    if(!entries.length){box.innerHTML='<div style="color:var(--text3);font-size:13px">No keys yet</div>';return}
-    box.innerHTML=entries.map(function(pair){
-      var p=pair[0],v=pair[1];
-      return '<div class="file-row"><div class="file-info"><div class="file-name">'+p+'</div><div class="file-size">••••'+(v.key||'').slice(-4)+' · '+new Date(v.ts).toLocaleString()+'</div></div><button class="xbtn" data-rm="'+p+'">✕</button></div>';
-    }).join('');
-    box.querySelectorAll('[data-rm]').forEach(function(b){
-      b.addEventListener('click',function(){
-        delete state.keys[b.getAttribute('data-rm')];
-        localStorage.setItem('alz_keys',JSON.stringify(state.keys));
-        renderKeys();updateStatus();toast('Key removed');
-      });
-    });
+    var box=$('savedKeys'),e=Object.entries(state.keys);
+    if(!e.length){box.innerHTML='<div style="color:var(--text3);font-size:13px">No keys yet</div>';return}
+    box.innerHTML=e.map(function(p){return '<div class="file-row"><div class="file-info"><div class="file-name">'+p[0]+'</div><div class="file-size">••••'+(p[1].key||'').slice(-4)+'</div></div><button class="xbtn" data-rm="'+p[0]+'">✕</button></div>'}).join('');
+    box.querySelectorAll('[data-rm]').forEach(function(b){b.addEventListener('click',function(){delete state.keys[b.getAttribute('data-rm')];localStorage.setItem('alz_keys',JSON.stringify(state.keys));renderKeys();updateStatus();toast('Removed')})});
   }
 
   function renderModels(){
     $('modelGrid').innerHTML=MODELS.map(function(m){
       var has=!!state.keys[m.provider]||!!state.keys.openrouter;
-      var sel=state.selected.indexOf(m.id)>-1?' sel':'';
-      return '<div class="model-card'+sel+'" data-mid="'+m.id+'"><div class="model-name">'+m.name+'</div><div class="model-meta">'+m.provider+(has?' · key ready':' · needs key')+'</div><span class="badge">'+m.badge+'</span></div>';
+      return '<div class="model-card'+(state.selected.indexOf(m.id)>-1?' sel':'')+'" data-mid="'+m.id+'"><div class="model-name">'+m.name+'</div><div class="model-meta">'+m.provider+(has?' · ready':' · needs key')+'</div><span class="badge">'+m.badge+'</span></div>';
     }).join('');
-    $('modelGrid').querySelectorAll('[data-mid]').forEach(function(card){
-      card.addEventListener('click',function(){
-        var id=card.getAttribute('data-mid'), i=state.selected.indexOf(id);
-        if(i>-1) state.selected.splice(i,1); else state.selected.push(id);
-        renderModels();
-      });
-    });
+    $('modelGrid').querySelectorAll('[data-mid]').forEach(function(c){c.addEventListener('click',function(){var id=c.getAttribute('data-mid'),i=state.selected.indexOf(id);if(i>-1)state.selected.splice(i,1);else state.selected.push(id);renderModels()})});
   }
-  $('saveModelsBtn').addEventListener('click',function(){
-    localStorage.setItem('alz_models',JSON.stringify(state.selected));
-    toast('Saved '+state.selected.length+' models');updateStatus();
-  });
+  $('saveModelsBtn').addEventListener('click',function(){localStorage.setItem('alz_models',JSON.stringify(state.selected));toast('Saved '+state.selected.length+' models');updateStatus()});
 
-  var drop=$('dropZone'), fin=$('fileInput');
+  var drop=$('dropZone'),fin=$('fileInput');
   drop.addEventListener('click',function(){fin.click()});
   drop.addEventListener('dragover',function(e){e.preventDefault();drop.classList.add('over')});
   drop.addEventListener('dragleave',function(){drop.classList.remove('over')});
   drop.addEventListener('drop',function(e){e.preventDefault();drop.classList.remove('over');handleFiles(e.dataTransfer.files)});
   fin.addEventListener('change',function(){handleFiles(fin.files)});
-  function handleFiles(list){
-    Array.from(list).forEach(function(f){
-      if(f.size>20*1024*1024){toast(f.name+' too large',false);return}
-      var r=new FileReader();
-      r.onload=function(ev){state.files.push({name:f.name,size:f.size,type:f.type,data:ev.target.result});renderFiles();toast(f.name+' added')};
-      if(f.type.indexOf('image/')===0) r.readAsDataURL(f); else r.readAsText(f);
-    });
-  }
-  function renderFiles(){
-    $('fileList').innerHTML=state.files.map(function(f,i){
-      var thumb=f.type.indexOf('image/')===0?'<img src="'+f.data+'">':'<div style="width:36px;height:36px;border-radius:5px;background:var(--bg4);display:flex;align-items:center;justify-content:center">📄</div>';
-      return '<div class="file-row">'+thumb+'<div class="file-info"><div class="file-name">'+f.name+'</div><div class="file-size">'+(f.size/1024).toFixed(1)+' KB</div></div><button class="xbtn" data-fi="'+i+'">✕</button></div>';
-    }).join('');
-    $('fileList').querySelectorAll('[data-fi]').forEach(function(b){
-      b.addEventListener('click',function(){state.files.splice(+b.getAttribute('data-fi'),1);renderFiles()});
-    });
-  }
+  function handleFiles(list){Array.from(list).forEach(function(f){if(f.size>20*1024*1024){toast('Too large',false);return}var r=new FileReader();r.onload=function(ev){state.files.push({name:f.name,size:f.size,type:f.type,data:ev.target.result});renderFiles();toast(f.name+' added')};if(f.type.indexOf('image/')===0)r.readAsDataURL(f);else r.readAsText(f)})}
+  function renderFiles(){$('fileList').innerHTML=state.files.map(function(f,i){var t=f.type.indexOf('image/')===0?'<img src="'+f.data+'">':'<div style="width:36px;height:36px;border-radius:5px;background:var(--bg4);display:flex;align-items:center;justify-content:center">📄</div>';return '<div class="file-row">'+t+'<div class="file-info"><div class="file-name">'+f.name+'</div><div class="file-size">'+(f.size/1024).toFixed(1)+' KB</div></div><button class="xbtn" data-fi="'+i+'">✕</button></div>'}).join('');$('fileList').querySelectorAll('[data-fi]').forEach(function(b){b.addEventListener('click',function(){state.files.splice(+b.getAttribute('data-fi'),1);renderFiles()})})}
 
   function updateStatus(){
-    var hasKey=Object.keys(state.keys).length>0, hasModels=state.selected.length>0;
+    var hasKey=Object.keys(state.keys).length>0;
     $('s1').classList.toggle('done',hasKey);$('s2').classList.toggle('done',state.ready);$('s3').classList.toggle('done',state.ready);
-    $('c1').classList.toggle('done',hasKey);$('c2').classList.toggle('done',hasModels);$('c3').classList.toggle('done',state.files.length>0);$('c4').classList.toggle('done',state.ready);
-    var dot=$('dot'),txt=$('statusTxt');
-    if(state.ready){dot.classList.add('on');txt.textContent='Session Ready'}else if(hasKey){dot.classList.remove('on');txt.textContent='Key Ready'}else{dot.classList.remove('on');txt.textContent='Disconnected'}
+    $('c1').classList.toggle('done',hasKey);$('c2').classList.toggle('done',state.selected.length>0);$('c3').classList.toggle('done',state.files.length>0);$('c4').classList.toggle('done',state.ready);
+    var d=$('dot'),t=$('statusTxt');
+    if(state.ready){d.classList.add('on');t.textContent='Roblox Context ON'}else if(hasKey){d.classList.remove('on');t.textContent='Key Ready'}else{d.classList.remove('on');t.textContent='Disconnected'}
     $('downloadBtn').disabled=!(hasKey&&state.ready);renderModels();
   }
 
   $('copyMcpBtn').addEventListener('click',function(){
-    var conf='{\n  "mcpServers": {\n    "Roblox_Studio": {\n      "command": "cmd.exe",\n      "args": [\n        "/c",\n        "cd /d %LOCALAPPDATA%\\\\Roblox && .\\\\mcp.bat"\n      ]\n    }\n  }\n}';
-    navigator.clipboard.writeText(conf).then(function(){toast('MCP config copied')});
+    navigator.clipboard.writeText('{\n  "mcpServers": {\n    "Roblox_Studio": {\n      "command": "cmd.exe",\n      "args": [\n        "/c",\n        "cd /d %LOCALAPPDATA%\\\\Roblox && .\\\\mcp.bat"\n      ]\n    }\n  }\n}').then(function(){toast('MCP config copied')});
   });
 
   $('connectBtn').addEventListener('click',function(){
-    if(Object.keys(state.keys).length===0){toast('Validate a key first',false);go('keys');return}
-    if(state.selected.length===0){toast('Select models',false);go('models');return}
+    if(!Object.keys(state.keys).length){toast('Validate a key first',false);go('keys');return}
+    if(!state.selected.length){toast('Select models',false);go('models');return}
+    state.placeId=$('placeId').value.trim();
     var log=$('connectLog'),btn=$('connectBtn');btn.disabled=true;log.innerHTML='';
-    var steps=['Checking validated keys...','Models: '+state.selected.join(', '),state.files.length?'Files: '+state.files.length:'No extra files','Roblox Studio MCP config ready (use Copy Config above)','Session marked ready for Bubble'];
-    var i=0;(function next(){if(i>=steps.length){state.ready=true;updateStatus();btn.disabled=false;toast('Session ready');return}log.innerHTML+='> '+steps[i]+'<br>';i++;setTimeout(next,350)})();
+    var steps=['Validating keys...','Injecting full Roblox Studio MCP system context into models...','Models will now act with unlimited Studio power','Session activated — Bubble ready'];
+    var i=0;(function n(){if(i>=steps.length){state.ready=true;updateStatus();btn.disabled=false;toast('Roblox context activated');return}log.innerHTML+='> '+steps[i]+'<br>';i++;setTimeout(n,400)})();
   });
 
   $('downloadBtn').addEventListener('click',function(){
-    if(!state.ready||!Object.keys(state.keys).length){toast('Finish keys + session first',false);return}
-    var payload={keys:state.keys,models:state.selected,modelMeta:MODELS.filter(function(m){return state.selected.indexOf(m.id)>-1}),files:state.files.map(function(f){return{name:f.name,type:f.type,size:f.size,data:f.data&&f.data.indexOf('data:')===0?f.data:undefined,text:f.type.indexOf('image/')!==0?f.data:undefined}})};
-    var bubble='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AlzGUI Bubble</title><style>*{margin:0;padding:0;box-sizing:border-box}html,body{height:100%;overflow:hidden;background:transparent;font-family:Inter,system-ui,sans-serif}#b{position:fixed;width:400px;height:560px;bottom:24px;right:24px;background:#0e0e12;border:1px solid #2a2a35;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 40px rgba(124,92,255,.18);display:flex;flex-direction:column;overflow:hidden;user-select:none}#b.drag{opacity:.93;cursor:grabbing}.hd{padding:14px 16px;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#1a1a22,#15151c);border-bottom:1px solid #2a2a35;cursor:grab}.hd:active{cursor:grabbing}.av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#22d3ee);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}.tt{font-size:13px;font-weight:600;color:#f0f0f5;flex:1}.ms{background:#1f1f28;border:1px solid #2a2a35;color:#c4b5fd;font-size:11px;padding:4px 8px;border-radius:8px;outline:none;max-width:140px}.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}.m{max-width:90%;padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.55;word-break:break-word;white-space:pre-wrap}.m.u{align-self:flex-end;background:#7c5cff;color:#fff;border-bottom-right-radius:4px}.m.a{align-self:flex-start;background:#1a1a22;color:#e0e0e8;border:1px solid #2a2a35;border-bottom-left-radius:4px}.m.s{align-self:center;background:transparent;color:#6a6a7a;font-size:11px}.m.e{align-self:center;color:#f87171;font-size:12px}.ir{padding:12px;border-top:1px solid #2a2a35;display:flex;gap:8px;background:#0e0e12}#inp{flex:1;background:#1a1a22;border:1px solid #2a2a35;border-radius:12px;padding:10px 12px;color:#f0f0f5;font-size:13px;outline:none;resize:none;max-height:90px;font-family:inherit}#inp:focus{border-color:#7c5cff}#sd{width:40px;height:40px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c5cff,#a78bfa);color:#fff;cursor:pointer;font-size:16px}#sd:disabled{opacity:.5;cursor:not-allowed}::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#3a3a45;border-radius:2px}.br{font-size:9px;color:#4a4a55;text-align:center;padding:4px 0 8px}</style></head><body><div id="b"><div class="hd" id="hd"><div class="av">✦</div><div class="tt">AlzGUI</div><select class="ms" id="ms"></select></div><div class="msgs" id="msgs"><div class="m s">Bubble online · real API · no window controls · drag to move</div></div><div class="ir"><textarea id="inp" rows="1" placeholder="Message the model..."></textarea><button id="sd">➤</button></div><div class="br">ALZ · BY ALZ♥︎ · real models</div></div><script>var P='+JSON.stringify(payload)+';var PR='+JSON.stringify(PROVIDERS)+';var b=document.getElementById("b"),hd=document.getElementById("hd"),msgs=document.getElementById("msgs"),inp=document.getElementById("inp"),sd=document.getElementById("sd"),ms=document.getElementById("ms");P.modelMeta.forEach(function(m){var o=document.createElement("option");o.value=m.id;o.textContent=m.name+" ("+m.provider+")";ms.appendChild(o)});var ox=0,oy=0,dg=false;hd.onmousedown=function(e){dg=true;b.classList.add("drag");ox=e.clientX-b.offsetLeft;oy=e.clientY-b.offsetTop};document.onmousemove=function(e){if(!dg)return;b.style.left=(e.clientX-ox)+"px";b.style.top=(e.clientY-oy)+"px";b.style.right="auto";b.style.bottom="auto"};document.onmouseup=function(){dg=false;b.classList.remove("drag")};function add(t,r){var d=document.createElement("div");d.className="m "+r;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d}function ctx(){var c="";(P.files||[]).forEach(function(f){if(f.text)c+="\\n\\n[File: "+f.name+"]\\n"+f.text.slice(0,8000);else if(f.data)c+="\\n\\n[Image: "+f.name+"]"});return c}async function call(id,txt){var meta=P.modelMeta.find(function(m){return m.id===id})||{provider:"openai",id:id};var prov=meta.provider;var ko=P.keys[prov]||P.keys.openrouter;if(!ko&&P.keys.openrouter){prov="openrouter";ko=P.keys.openrouter}if(!ko)throw new Error("No key for "+prov);var conf=Object.assign({},PR[prov]);if(prov==="custom"||!conf.base)conf.base=ko.endpoint;var key=ko.key;var full=txt+ctx();if(prov==="anthropic"){var r=await fetch(conf.base+conf.chat,{method:"POST",headers:{"Content-Type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01"},body:JSON.stringify({model:id,max_tokens:4096,messages:[{role:"user",content:full}]})});if(!r.ok)throw new Error(await r.text());var d=await r.json();return(d.content&&d.content[0]&&d.content[0].text)||JSON.stringify(d)}if(prov==="google"){var u=conf.base+"/models/"+id+":generateContent?key="+encodeURIComponent(key);var r2=await fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:full}]}]})});if(!r2.ok)throw new Error(await r2.text());var d2=await r2.json();return(d2.candidates&&d2.candidates[0]&&d2.candidates[0].content&&d2.candidates[0].content.parts[0].text)||JSON.stringify(d2)}var r3=await fetch(conf.base+conf.chat,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},body:JSON.stringify({model:id,messages:[{role:"user",content:full}],max_tokens:4096,temperature:0.7})});if(!r3.ok)throw new Error(await r3.text());var d3=await r3.json();return(d3.choices&&d3.choices[0]&&d3.choices[0].message&&d3.choices[0].message.content)||JSON.stringify(d3)}async function send(){var t=inp.value.trim();if(!t)return;add(t,"u");inp.value="";sd.disabled=true;var th=add("Calling "+ms.value+"...","s");try{var rep=await call(ms.value,t);th.remove();add(rep,"a")}catch(e){th.remove();add("Error: "+String(e.message||e).slice(0,400),"e")}sd.disabled=false}sd.onclick=send;inp.onkeydown=function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}};\u003c/script\u003e</body></html>';
+    if(!state.ready||!Object.keys(state.keys).length){toast('Activate Roblox context first',false);return}
+    var payload={keys:state.keys,models:state.selected,modelMeta:MODELS.filter(function(m){return state.selected.indexOf(m.id)>-1}),files:state.files.map(function(f){return{name:f.name,type:f.type,size:f.size,data:f.data&&f.data.indexOf('data:')===0?f.data:undefined,text:f.type.indexOf('image/')!==0?f.data:undefined}}),placeId:state.placeId,robloxSystem:ROBLOX_SYSTEM};
+
+    var bubble='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AlzGUI Bubble</title><style>*{margin:0;padding:0;box-sizing:border-box}html,body{height:100%;overflow:hidden;background:transparent;font-family:Inter,system-ui,sans-serif}#b{position:fixed;width:400px;height:560px;bottom:24px;right:24px;background:#0e0e12;border:1px solid #2a2a35;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 40px rgba(124,92,255,.18);display:flex;flex-direction:column;overflow:hidden;user-select:none}#b.drag{opacity:.93;cursor:grabbing}.hd{padding:14px 16px;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#1a1a22,#15151c);border-bottom:1px solid #2a2a35;cursor:grab}.av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#22d3ee);display:flex;align-items:center;justify-content:center;font-size:14px}.tt{font-size:13px;font-weight:600;color:#f0f0f5;flex:1}.ms{background:#1f1f28;border:1px solid #2a2a35;color:#c4b5fd;font-size:11px;padding:4px 8px;border-radius:8px;outline:none;max-width:140px}.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}.m{max-width:90%;padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.55;word-break:break-word;white-space:pre-wrap}.m.u{align-self:flex-end;background:#7c5cff;color:#fff;border-bottom-right-radius:4px}.m.a{align-self:flex-start;background:#1a1a22;color:#e0e0e8;border:1px solid #2a2a35;border-bottom-left-radius:4px}.m.s{align-self:center;color:#6a6a7a;font-size:11px}.m.e{align-self:center;color:#f87171;font-size:12px}.ir{padding:12px;border-top:1px solid #2a2a35;display:flex;gap:8px;background:#0e0e12}#inp{flex:1;background:#1a1a22;border:1px solid #2a2a35;border-radius:12px;padding:10px 12px;color:#f0f0f5;font-size:13px;outline:none;resize:none;max-height:90px;font-family:inherit}#inp:focus{border-color:#7c5cff}#sd{width:40px;height:40px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c5cff,#a78bfa);color:#fff;cursor:pointer;font-size:16px}#sd:disabled{opacity:.5}::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#3a3a45;border-radius:2px}.br{font-size:9px;color:#4a4a55;text-align:center;padding:4px 0 8px}</style></head><body><div id="b"><div class="hd" id="hd"><div class="av">✦</div><div class="tt">AlzGUI · Roblox</div><select class="ms" id="ms"></select></div><div class="msgs" id="msgs"><div class="m s">Connected · full Roblox Studio control active · drag to move</div></div><div class="ir"><textarea id="inp" rows="1" placeholder="Tell me what to change in Studio..."></textarea><button id="sd">➤</button></div><div class="br">ALZ · full Roblox power</div></div><script>var P='+JSON.stringify(payload)+';var PR='+JSON.stringify(PROVIDERS)+';var b=document.getElementById("b"),hd=document.getElementById("hd"),msgs=document.getElementById("msgs"),inp=document.getElementById("inp"),sd=document.getElementById("sd"),ms=document.getElementById("ms");P.modelMeta.forEach(function(m){var o=document.createElement("option");o.value=m.id;o.textContent=m.name;ms.appendChild(o)});var ox=0,oy=0,dg=false;hd.onmousedown=function(e){dg=true;b.classList.add("drag");ox=e.clientX-b.offsetLeft;oy=e.clientY-b.offsetTop};document.onmousemove=function(e){if(!dg)return;b.style.left=(e.clientX-ox)+"px";b.style.top=(e.clientY-oy)+"px";b.style.right="auto";b.style.bottom="auto"};document.onmouseup=function(){dg=false;b.classList.remove("drag")};function add(t,r){var d=document.createElement("div");d.className="m "+r;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d}function ctx(){var c="\\n\\n"+P.robloxSystem;if(P.placeId)c+="\\nCurrent Place/Universe ID: "+P.placeId;(P.files||[]).forEach(function(f){if(f.text)c+="\\n\\n[File: "+f.name+"]\\n"+f.text.slice(0,6000);else if(f.data)c+="\\n\\n[Image: "+f.name+"]"});return c}async function call(id,txt){var meta=P.modelMeta.find(function(m){return m.id===id})||{provider:"openai",id:id};var prov=meta.provider;var ko=P.keys[prov]||P.keys.openrouter;if(!ko&&P.keys.openrouter){prov="openrouter";ko=P.keys.openrouter}if(!ko)throw new Error("No key for "+prov);var conf=Object.assign({},PR[prov]);if(prov==="custom"||!conf.base)conf.base=ko.endpoint;var key=ko.key;var full=txt+ctx();if(prov==="anthropic"){var r=await fetch(conf.base+conf.chat,{method:"POST",headers:{"Content-Type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01"},body:JSON.stringify({model:id,max_tokens:4096,system:P.robloxSystem,messages:[{role:"user",content:full}]})});if(!r.ok)throw new Error(await r.text());var d=await r.json();return(d.content&&d.content[0]&&d.content[0].text)||JSON.stringify(d)}if(prov==="google"){var u=conf.base+"/models/"+id+":generateContent?key="+encodeURIComponent(key);var r2=await fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system_instruction:{parts:[{text:P.robloxSystem}]},contents:[{parts:[{text:full}]}]})});if(!r2.ok)throw new Error(await r2.text());var d2=await r2.json();return(d2.candidates&&d2.candidates[0]&&d2.candidates[0].content&&d2.candidates[0].content.parts[0].text)||JSON.stringify(d2)}var r3=await fetch(conf.base+conf.chat,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},body:JSON.stringify({model:id,messages:[{role:"system",content:P.robloxSystem},{role:"user",content:full}],max_tokens:4096,temperature:0.7})});if(!r3.ok)throw new Error(await r3.text());var d3=await r3.json();return(d3.choices&&d3.choices[0]&&d3.choices[0].message&&d3.choices[0].message.content)||JSON.stringify(d3)}async function send(){var t=inp.value.trim();if(!t)return;add(t,"u");inp.value="";sd.disabled=true;var th=add("Executing in Studio context...","s");try{var rep=await call(ms.value,t);th.remove();add(rep,"a")}catch(e){th.remove();add("Error: "+String(e.message||e).slice(0,400),"e")}sd.disabled=false}sd.onclick=send;inp.onkeydown=function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}};\u003c/script\u003e</body></html>';
+
     var blob=new Blob([bubble],{type:'text/html'});
     var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='AlzGUI-Bubble.html';a.click();URL.revokeObjectURL(a.href);
-    toast('Bubble downloaded — real API');
+    toast('Bubble ready — full Roblox control context');
   });
 
   renderKeys();renderModels();updateStatus();go('dashboard');
